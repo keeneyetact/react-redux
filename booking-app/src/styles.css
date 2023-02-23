@@ -801,6 +801,12 @@ img {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.addCity:disabled{
+  border: 1px solid #df2b2b;
+  background-color: #860101;
+  color: #ebe1e1;
+}
+
 .lws-remove {
   display: flex;
   height: 40px;
