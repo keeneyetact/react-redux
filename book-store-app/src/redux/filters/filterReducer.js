@@ -1,7 +1,7 @@
 import { FEATURED, ALL } from "./actionTypes";
 
 const intialState = {
-    isFeature: false
+    isFeatured: false
 }
 
 const filterReducer = (state = intialState, action) => {
@@ -9,12 +9,12 @@ const filterReducer = (state = intialState, action) => {
         case FEATURED:
             return {
                 ...state,
-                isFeature : true
+                isFeatured : true
             }
         case ALL:
             return {
                 ...state,
-                isFeature : false
+                isFeatured : false
             }
         default:
             return state
