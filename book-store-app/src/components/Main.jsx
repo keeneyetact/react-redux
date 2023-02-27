@@ -1,5 +1,5 @@
 import React from 'react'
-import Book from './Book'
+import Books from './Books'
 import Input from './Input'
 
 const Main = () => {
@@ -15,10 +15,8 @@ const Main = () => {
             <button className="filter-btn" id="lws-filterFeatured">Featured</button>
           </div>
         </div>
-        <div className="lws-bookContainer">
           {/* <!-- Card 1 --> */}
-            <Book />
-        </div>
+            <Books />
       </div>
       <div>
         <Input />
