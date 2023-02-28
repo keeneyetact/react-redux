@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Books from './Books'
 import Input from './Input'
@@ -7,6 +7,7 @@ import { featuredBooks, allBooks } from '../redux/filters/actions'
 const Main = () => {
   const dispatch = useDispatch()
   const { isFeatured } = useSelector(state => state.filters)
+  const [currentBookId, setCurrentBookId] = useState(null)
   console.log(isFeatured)
 
   const handleAll = (e) => {
@@ -31,10 +32,10 @@ const Main = () => {
           </div>
         </div>
           {/* <!-- Card 1 --> */}
-            <Books />
+            <Books setCurrentBookId={setCurrentBookId} />
       </div>
       <div>
-        <Input />
+        <Input currentBookId={currentBookId} setCurrentBookId={setCurrentBookId} />
       </div>
     </div>
   </div>
