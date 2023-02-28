@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Navbar from './Navbar'
 import Books from './Books'
 import Input from './Input'
 import { featuredBooks, allBooks } from '../redux/filters/actions'
@@ -9,6 +10,7 @@ const Main = () => {
   const dispatch = useDispatch()
   const { isFeatured } = useSelector(state => state.filters)
   const [currentBookId, setCurrentBookId] = useState(null)
+  const [query, setQuery] = useState('')
   console.log(isFeatured)
 
   const handleAll = (e) => {
@@ -26,6 +28,9 @@ const Main = () => {
   
 
   return (
+    <div>
+      <Navbar query={query} setQuery={setQuery} />
+    
     <div className="py-12 2xl:px-6">
     <div className="container grid xl:grid-cols-[auto_350px] 2xl:grid-cols-[auto_400px] gap-4 2xl:gap-8">
       <div className="order-2 xl:-order-1">
@@ -38,12 +43,14 @@ const Main = () => {
           </div>
         </div>
           {/* <!-- Card 1 --> */}
-            <Books setCurrentBookId={setCurrentBookId} />
+            <Books setCurrentBookId={setCurrentBookId} query={query} />
       </div>
       <div>
         <Input currentBookId={currentBookId} setCurrentBookId={setCurrentBookId} />
       </div>
     </div>
+  </div>
+
   </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../images/logo.svg'
 
-const Navbar = () => {
+const Navbar = ({ setQuery }) => {
   return (
     <div className="py-4 2xl:px-6">
     <div className="container flex items-center justify-between">
@@ -21,7 +21,7 @@ const Navbar = () => {
               d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z">
             </path>
           </svg>
-          <input type="text" placeholder="Filter books..." className="search" id="lws-searchBook" />
+          <input onChange={event => setQuery(event.target.value)} type="text" placeholder="Filter books..." className="search" id="lws-searchBook" />
         </div>
       </form>
     </div>
