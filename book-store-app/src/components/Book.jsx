@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { deleted } from '../redux/books/actions'
+import deleteBook from '../redux/books/thunk/deleteBook'
 
 const Book = ({book, setCurrentBookId}) => {
   const dispatch = useDispatch()
@@ -13,7 +13,7 @@ const Book = ({book, setCurrentBookId}) => {
 
   const handleDelete = (e) => {
     e.preventDefault()
-    dispatch(deleted(id))
+    dispatch(deleteBook(id))
   }
   return (
     <div className="book-card">

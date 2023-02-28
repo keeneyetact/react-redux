@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Books from './Books'
 import Input from './Input'
 import { featuredBooks, allBooks } from '../redux/filters/actions'
+import fetchBooks from '../redux/books/thunk/fetchBooks'
 
 const Main = () => {
   const dispatch = useDispatch()
@@ -18,6 +19,11 @@ const Main = () => {
     e.preventDefault()
     dispatch(featuredBooks())
   }
+
+  useEffect(() => {
+    dispatch(fetchBooks)
+  }, [dispatch])
+  
 
   return (
     <div className="py-12 2xl:px-6">

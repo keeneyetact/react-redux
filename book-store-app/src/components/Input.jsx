@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { added, updated } from '../redux/books/actions'
+import addBook from '../redux/books/thunk/addBook'
+import updateBook from '../redux/books/thunk/updateBook'
 
 const initialBook = {
   "name": "",
@@ -30,9 +31,9 @@ const Input = ({ currentBookId, setCurrentBookId }) => {
   const handleSubmit = (e) =>{
     e.preventDefault()
     if(currentBookId){
-      dispatch(updated(currentBookId, bookData))
+      dispatch(updateBook(currentBookId, bookData))
     } else {
-      dispatch(added(bookData))
+      dispatch(addBook(bookData))
     }
     console.log(bookData)
     setBookData(initialBook)
