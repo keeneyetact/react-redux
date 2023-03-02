@@ -11,15 +11,16 @@ const cartReducer = (state = initialState, action) => {
             const { product, cartQuantity} = action.payload
             return {
                 ...state,
-                total : state.total + (product.price * cartQuantity),
-                product: [...state.product, {product, cartQuantity}]
+                total : state.total + product.price ,
+                product: [...state.product, product]
             }
         case INCREMENT:
             const {productId, updatedProduct} = action.payload;
+            console.log(updatedProduct)
             return {
                 ...state,
                 total: state.total + updatedProduct.price,
-                product: state.product.map((product) => product.id === productId ? product.cartQuantity += 1 : product)
+                product: state.product.map((product) => product.id === productId ? [product, product.cartQuantity += 1] : product)
             }
         // case DECREMENT:
         //     const {productId, updatedProduct} = action.payload;

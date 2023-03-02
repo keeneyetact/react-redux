@@ -9,11 +9,11 @@ export const addToCart = (product, cartQuantity) => {
     }
 }
 
-export const incrementCart = (product, productQuantity) => {
+export const incrementCart = (productId, updatedProduct) => {
     return {
         type: INCREMENT,
         payload: {
-            product, productQuantity
+            productId, updatedProduct
         }
     }
 }
