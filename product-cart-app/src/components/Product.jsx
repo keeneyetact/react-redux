@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addToCart } from '../redux/product/action'
 
 
@@ -9,7 +9,6 @@ const Product = ({product}) => {
 
   const handleAddToCart = (e) => {
     e.preventDefault()
-    console.log(id)
     dispatch(addToCart(id))
   }
   return (

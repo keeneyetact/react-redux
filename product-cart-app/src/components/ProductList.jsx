@@ -4,7 +4,6 @@ import Product from './Product'
 
 const ProductList = () => {
   const products = useSelector(state => state.products)
-  console.log(products)
   return (
     <div className="productContainer" id="lws-productContainer">
       {products && products.map((product) => {

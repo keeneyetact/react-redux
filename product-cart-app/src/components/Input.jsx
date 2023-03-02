@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { addProduct } from '../redux/product/action'
 
 const initialProduct = {
   "name": "",
   "category": "",
   "thumbnail": "",
-  "price": null,
-  "quantity": null,
+  "price": "",
+  "quantity": "",
   "cartQty": 0,
-  "cartTotal":0
+  "cartTotal":0,
+  "id": 0,
 }
 
 const Input = () => {
   const dispatch = useDispatch()
+  
   const [productData, setProductData] = useState(initialProduct)
 
   const handleChange = (e) => {
@@ -24,6 +26,7 @@ const Input = () => {
   const handleSubmit = (e) =>{
     e.preventDefault()
     dispatch(addProduct(productData))
+    initialProduct.id = initialProduct.id + 1 
     setProductData(initialProduct)
   }
   return (

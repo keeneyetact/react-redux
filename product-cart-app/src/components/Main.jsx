@@ -6,7 +6,6 @@ import ProductList from './ProductList'
 
 const Main = () => {
     const [showHome, setShowHome] = useState(true)
-    console.log(showHome)
   return (
     <div>
         <Navbar setShowHome={setShowHome} />

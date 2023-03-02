@@ -4,7 +4,7 @@ import { addToCart, deleteToCart, removeToCart } from '../redux/product/action'
 
 const CartItem = ({product}) => {
     const dispatch = useDispatch()
-    const { id, name, category, thumbnail, price, cartQty, cartTotal } = product
+    const { id, name, category, thumbnail, price, cartQty, quantity, cartTotal } = product
 
   return (
     <div className="cartCard">
@@ -21,11 +21,11 @@ const CartItem = ({product}) => {
             <div className="flex items-center justify-center col-span-4 mt-4 space-x-8 md:mt-0">
               {/* <!-- amount buttons --> */}
               <div className="flex items-center space-x-4">
-                <button onClick={() => dispatch(addToCart(id))} className="lws-incrementQuantity">
+                <button onClick={() => dispatch(addToCart(id))} disabled={!quantity} className="lws-incrementQuantity">
                   <i className="text-lg fa-solid fa-plus"></i>
                 </button>
                 <span className="lws-cartQuantity">{cartQty}</span>
-                <button onClick={() => dispatch(removeToCart(id))} className="lws-decrementQuantity">
+                <button onClick={() => dispatch(removeToCart(id))} disabled={!cartQty} className="lws-decrementQuantity">
                   <i className="text-lg fa-solid fa-minus"></i>
                 </button>
               </div>
