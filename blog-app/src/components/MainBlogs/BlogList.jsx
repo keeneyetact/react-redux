@@ -7,6 +7,15 @@ import Blog from './Blog'
 const BlogList = () => {
   const dispatch = useDispatch()
   const {blogs} = useSelector(state => state.blogs)
+  const { filter } = useSelector(state => state.filter)
+
+    const filterBlogs = (blog) => {
+      if(filter) {
+        return blog.isSaved
+      } else {
+        return true
+      }
+    }
 
   console.log(blogs)
 
@@ -16,7 +25,7 @@ const BlogList = () => {
   
   return (
     <div className="post-container" id="lws-postContainer">
-        { blogs && blogs.map((blog) => {
+        { blogs && blogs.filter(filterBlogs).map((blog) => {
            return <Blog key={blog.id} blog={blog} />
         }) }
    </div>
