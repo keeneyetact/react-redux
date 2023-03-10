@@ -1,22 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import Git from '../../images/git.webp'
+const RelatedBlog = ({ blog }) => {
 
-const RelatedBlog = () => {
+  const { id, title, image, createdAt, tags } = blog
   return (
     <div className="card">
-          <Link href="/post/1">
-            <img src={Git} className="card-image" alt="" />
+          <Link to={`/blog/${id}`} >
+            <img src={image} className="card-image" alt={title} />
           </Link>
           <div className="p-4">
-            <Link href="/post/1" className="text-lg post-title lws-RelatedPostTitle">
-              Top Github Alternatives
+            <Link to={`/blog/${id}`} className="text-lg post-title lws-RelatedPostTitle">
+              {title}
             </Link>
             <div className="mb-0 tags">
-              <span>#python,</span> <span>#tech,</span> <span>#git</span>
+                {tags.map((tag) => <span>#{tag},</span>)}
             </div>
-            <p>2010-03-27</p>
+            <p>{createdAt}</p>
           </div>
         </div>
   )
