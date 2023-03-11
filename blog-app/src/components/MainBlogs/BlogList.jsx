@@ -6,8 +6,10 @@ import Blog from './Blog'
 
 const BlogList = () => {
   const dispatch = useDispatch()
-  const {blogs} = useSelector(state => state.blogs)
+  const { blogs } = useSelector(state => state.blogs)
   const { filter } = useSelector(state => state.filter)
+  const { sort } = useSelector(state => state.sort)
+
 
     const filterBlogs = (blog) => {
       if(filter) {
@@ -17,11 +19,9 @@ const BlogList = () => {
       }
     }
 
-  console.log(blogs)
-
   useEffect(() => {
-    dispatch(fetchBlogs('tags','filter','sort'))
-  }, [dispatch])
+    dispatch(fetchBlogs({sort}))
+  }, [dispatch, sort])
   
   return (
     <div className="post-container" id="lws-postContainer">

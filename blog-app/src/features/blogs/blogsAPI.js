@@ -1,20 +1,13 @@
 import axios from "../../utils/axios";
 
-export const getBlogs = async (tags, sort, filter) => {
+export const getBlogs = async (sort) => {
     let queryString = "";
 
-    // if (tags?.length > 0) {
-    //     queryString += tags.map((tag) => `tags_like=${tag}`).join("&");
-    // }
+    if (sort !== "") {
+        queryString += `_sort=${sort}&_order=desc`;
+    }
 
-    // if (search !== "") {
-    //     queryString += `&q=${search}`;
-    // }
-
-    // const response = await axios.get(`/blogs/?${queryString}`);
-    const response = await axios.get(`/blogs`);
-
-    console.log(response)
+    const response = await axios.get(`/blogs/?${queryString}`);
 
     return response.data;
 };
