@@ -7,12 +7,12 @@ import Blog from './Blog'
 const BlogList = () => {
   const dispatch = useDispatch()
   const { blogs } = useSelector(state => state.blogs)
-  const { filter } = useSelector(state => state.filter)
+  const { isSaved } = useSelector(state => state.filter.filter)
   const { sort } = useSelector(state => state.sort)
 
 
     const filterBlogs = (blog) => {
-      if(filter) {
+      if(isSaved) {
         return blog.isSaved
       } else {
         return true

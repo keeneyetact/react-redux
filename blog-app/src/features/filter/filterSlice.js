@@ -1,7 +1,9 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-    filter: {},
+    filter: {
+        isSaved: false
+    },
 };
 
 const filterSlice = createSlice({
@@ -9,14 +11,10 @@ const filterSlice = createSlice({
     initialState,
     reducers: {
         filterSelected: (state, action) => {
-            state.filter = action.payload
+            state.filter.isSaved = action.payload
         },
-        filterRemoved: (state, action) => {
-            state.filter = {}
-        },
-        
     },
 });
 
 export default filterSlice.reducer;
-export const { filterSelected, filterRemoved } = filterSlice.actions;
+export const { filterSelected } = filterSlice.actions;
