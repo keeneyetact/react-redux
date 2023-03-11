@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBlogs } from '../../features/blogs/blogsSlice'
 
 import Blog from './Blog'
+import Loading from '../Ui/Loading'
 
 const BlogList = () => {
   const dispatch = useDispatch()
-  const { blogs } = useSelector(state => state.blogs)
+  const { blogs, isLoading, isError, error } = useSelector(state => state.blogs)
   const { isSaved } = useSelector(state => state.filter.filter)
   const { sort } = useSelector(state => state.sort)
 
@@ -22,12 +23,27 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(fetchBlogs({sort}))
   }, [dispatch, sort])
+
+  // decide what to render
+  let content;
+
+  if (isLoading) content = <Loading />;
+  if (!isLoading && isError)
+      content = <div className="col-span-12">{error}</div>;
+
+  if (!isError && !isLoading && blogs?.length === 0) {
+      content = <div className="col-span-12">No videos found!</div>;
+  }
+
+  if (!isError && !isLoading && blogs?.length > 0) {
+      content = blogs.filter(filterBlogs).map((blog) => {
+        return <Blog key={blog.id} blog={blog} />
+     }) ;
+  }
   
   return (
     <div className="post-container" id="lws-postContainer">
-        { blogs && blogs.filter(filterBlogs).map((blog) => {
-           return <Blog key={blog.id} blog={blog} />
-        }) }
+        { content }
    </div>
   )
 }
