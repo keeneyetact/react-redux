@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { updateBlogLike } from '../../features/blog/blogSlice'
+import { updateBlog } from '../../features/blog/blogSlice'
 
 const DetailBlog = ({blog}) => {
   const { id, title, description, tags, likes, isSaved, image } = blog
@@ -12,7 +12,16 @@ const DetailBlog = ({blog}) => {
       ...blog,
       likes: likes + 1
     }
-    dispatch(updateBlogLike({id, newBlog}))
+    dispatch(updateBlog({id, newBlog}))
+  }
+
+  const handleIsSaved = (e) => {
+    e.preventDefault()
+    const newBlog = {
+      ...blog,
+      isSaved: !isSaved
+    }
+    dispatch(updateBlog({id, newBlog}))
   }
 
   return (
@@ -29,7 +38,7 @@ const DetailBlog = ({blog}) => {
           <button onClick={handleLikes} className="like-btn" id="lws-singleLinks">
             <i className="fa-regular fa-thumbs-up"></i> {likes}
           </button>
-          <button className={`${isSaved ? 'active save-btn' : 'save-btn'}`} id="lws-singleSavedBtn">
+          <button onClick={handleIsSaved} className={`${isSaved ? 'active save-btn' : 'save-btn'}`} id="lws-singleSavedBtn">
             <i className="fa-regular fa-bookmark"></i> {isSaved ? 'Saved' : 'Save'}
           </button>
         </div>

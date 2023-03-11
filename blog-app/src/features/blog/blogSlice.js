@@ -1,4 +1,4 @@
-import { blogLike, getBlog } from "./blogAPI";
+import { updatedBlog, getBlog } from "./blogAPI";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
@@ -15,8 +15,8 @@ export const fetchBlog = createAsyncThunk("blog/fetchBlog", async (id) => {
     return blog;
 });
 
-export const updateBlogLike = createAsyncThunk("blog/updateBlogLike", async ({id, newBlog}) => {
-    const blog = await blogLike({id, newBlog});
+export const updateBlog = createAsyncThunk("blog/updateBlog", async ({id, newBlog}) => {
+    const blog = await updatedBlog({id, newBlog});
     return blog
 })
 
@@ -39,15 +39,15 @@ const blogSlice = createSlice({
                 state.isError = true;
                 state.error = action.error?.message;
             })
-            .addCase(updateBlogLike.pending, (state) => {
+            .addCase(updateBlog.pending, (state) => {
                 state.isError = false;
                 state.isLoading = true;
             })
-            .addCase(updateBlogLike.fulfilled, (state, action) => {
+            .addCase(updateBlog.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.blog = action.payload;
             })
-            .addCase(updateBlogLike.rejected, (state, action) => {
+            .addCase(updateBlog.rejected, (state, action) => {
                 state.isLoading = false;
                 state.blog = {};
                 state.isError = true;

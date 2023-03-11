@@ -6,7 +6,7 @@ export const getBlog = async (id) => {
     return response.data;
 };
 
-export const blogLike = async ({id, newBlog}) => {
+export const updatedBlog = async ({id, newBlog}) => {
     const response = await axios.put(`/blogs/${id}`, newBlog)
 
     return response.data;    
