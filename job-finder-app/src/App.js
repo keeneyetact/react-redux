@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './componenets/Navbar/Navbar';
 import Sidebar from './componenets/Sidebar/Sidebar';
