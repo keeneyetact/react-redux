@@ -19,3 +19,4 @@ const filterSlice = createSlice({
 })
 
 export default filterSlice.reducer
+export const { searchBy, sortBy } = filterSlice.actions
