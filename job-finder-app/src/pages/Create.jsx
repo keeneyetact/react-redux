@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { createJob } from '../features/job/jobSlice'
+
 
 const Create = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [title, setTitle] = useState('')
+  const [type, setType] = useState('')
+  const [salary, setSalary] = useState('')
+  const [deadline, setDeadline] = useState('')
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    let data = {
+      title,
+      type,
+      salary: Number(salary),
+      deadline
+    }
+    dispatch(createJob(data))
+    navigate('/')
+  }
+
   return (
     <div className="max-w-[90rem] mx-auto px-4 sm:px-6 md:px-8" >
     <div className="lg:pl-[14rem] mt-[5.8125rem]">
@@ -8,10 +33,11 @@ const Create = () => {
         <h1 className="mb-10 text-center lws-section-title">Add New Job</h1>
 
         <div className="max-w-3xl mx-auto">
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="fieldContainer">
               <label for="lws-JobTitle" className="text-sm font-medium text-slate-300">Job Title</label>
-              <select id="lws-JobTitle" name="lwsJobTitle" required>
+              <select value={title} onChange={(e) => setTitle(e.target.value)}
+                      id="lws-JobTitle" name="lwsJobTitle" required>
                 <option value="" hidden selected>Select Job</option>
                 <option>Software Engineer</option>
                 <option>Software Developer</option>
@@ -32,7 +58,8 @@ const Create = () => {
 
             <div className="fieldContainer">
               <label for="lws-JobType">Job Type</label>
-              <select id="lws-JobType" name="lwsJobType" required>
+              <select value={type} onChange={(e) => setType(e.target.value)}
+                     id="lws-JobType" name="lwsJobType" required>
                 <option value="" hidden selected>Select Job Type</option>
                 <option>Full Time</option>
                 <option>Internship</option>
@@ -44,19 +71,21 @@ const Create = () => {
               <label for="lws-JobSalary">Salary</label>
               <div className="flex border rounded-md shadow-sm border-slate-600">
                 <span className="input-tag">BDT</span>
-                <input type="number" name="lwsJobSalary" id="lws-JobSalary" required className="!rounded-l-none !border-0"
+                <input value={salary} onChange={(e) => setSalary(e.target.value)}
+                  type="number" name="lwsJobSalary" id="lws-JobSalary" required className="!rounded-l-none !border-0"
                   placeholder="20,00,000" />
               </div>
             </div>
 
             <div className="fieldContainer">
               <label for="lws-JobDeadline">Deadline</label>
-              <input type="date" name="lwsJobDeadline" id="lws-JobDeadline" required />
+              <input value={deadline} onChange={(e) => setDeadline(e.target.value)} 
+                   type="date" name="lwsJobDeadline" id="lws-JobDeadline" required />
             </div>
 
             <div className="text-right">
               <button type="submit" id="lws-submit" className="cursor-pointer btn btn-primary w-fit">
-                Edit
+                Add
               </button>
             </div>
           </form>
