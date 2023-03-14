@@ -6,7 +6,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     error: "",
-    editing: {},
+    updating: {},
 };
 
 // async thunks
@@ -40,6 +40,14 @@ export const removeJob = createAsyncThunk("job/removeJob", async (id) => {
 const jobSlice = createSlice({
     name: "job",
     initialState,
+    reducers: {
+        updateStart: (state, action) => {
+            state.updating = action.payload;
+        },
+        updateEnd: (state) => {
+            state.updating = {}
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchJobs.pending, (state) => {
@@ -113,3 +121,4 @@ const jobSlice = createSlice({
 
 
 export default jobSlice.reducer;
+export const { updateStart, updateEnd } = jobSlice.actions

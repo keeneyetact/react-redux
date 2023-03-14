@@ -86,7 +86,7 @@ const Create = () => {
             <div className="text-right">
               <button type="submit" id="lws-submit" className="cursor-pointer btn btn-primary w-fit">
                 Add
-              </button>
+              </button> 
             </div>
           </form>
         </div>

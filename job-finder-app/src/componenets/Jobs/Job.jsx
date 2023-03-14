@@ -1,6 +1,11 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { updateStart } from '../../features/job/jobSlice'
 
 const Job = ({job}) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { id, title, type, salary, deadline } = job || {}
 
     const colorType = (color) => {
@@ -15,6 +20,12 @@ const Job = ({job}) => {
                 return ;
          }
 
+    }
+
+    const handleEdit = (e) => {
+        e.preventDefault()
+        dispatch(updateStart(job))
+        navigate('/edit')
     }
 
   return (
@@ -39,7 +50,7 @@ const Job = ({job}) => {
                         </div>
                         <div className="mt-5 flex lg:mt-0 lg:ml-4">
                             <span className="hidden sm:block">
-                                <button type="button" className="lws-edit btn btn-primary">
+                                <button onClick={handleEdit} type="button" className="lws-edit btn btn-primary">
                                     <i className="fa-solid fa-pen text-gray-300 -ml-1 mr-2"></i>
                                     Edit
                                 </button>
