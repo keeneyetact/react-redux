@@ -1,23 +1,39 @@
 import React from 'react'
 
-const Job = () => {
+const Job = ({job}) => {
+    const { id, title, type, salary, deadline } = job || {}
+
+    const colorType = (color) => {
+         switch (color) {
+            case 'Full Time':
+                return '#FF8A00'
+            case 'Internship':
+                return '#FF5757'
+            case 'Remote':
+                return '#56E5C4'
+            default:
+                return ;
+         }
+
+    }
+
   return (
     <div className="lws-single-job">
                         <div className="flex-1 min-w-0">
-                            <h2 className="lws-title">Back End Developer</h2>
+                            <h2 className="lws-title">{title}</h2>
                             <div className="job-footers">
                                 <div className="lws-type">
                                     {/* <!-- Fulltime - #FF8A00,  --><!-- Internship - #FF5757,  --><!-- Remote - #56E5C4,  --> */}
-                                    <i className="fa-solid fa-stop !text-[#FF8A00] text-lg mr-1.5"></i>
-                                    Full-time
+                                    <i className={`fa-solid fa-stop !text-[${colorType(type)}] text-lg mr-1.5`}></i>
+                                    {type}
                                 </div>
                                 <div className="lws-salary">
                                     <i className="fa-solid fa-bangladeshi-taka-sign text-slate-400 text-lg mr-1.5"></i>
-                                    BDT 40,000
+                                    BDT {salary}
                                 </div>
                                 <div className="lws-deadline">
                                     <i className="fa-regular fa-calendar text-slate-400 text-lg mr-1.5"></i>
-                                    Closing on 2022-12-31
+                                    Closing on {deadline}
                                 </div>
                             </div>
                         </div>
