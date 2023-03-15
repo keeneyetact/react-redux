@@ -2,11 +2,15 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Job from './Job'
 import { fetchJobs } from '../../features/job/jobSlice'
+import { useParams } from 'react-router-dom'
 
 const Jobs = () => {
+  const {query} = useParams()
+  const dispatch = useDispatch()
   const { jobs } = useSelector(state => state.job)
   const { search, sort } = useSelector(state => state.filter)
-  const dispatch = useDispatch()
+
+  console.log(query)
 
   const filterBySearch =  ( job ) => {
     if (search === "") {
@@ -26,8 +30,8 @@ const Jobs = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchJobs())
-  },[])
+    dispatch(fetchJobs(query))
+  },[query])
 
   console.log(jobs)
 

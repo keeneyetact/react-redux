@@ -1,7 +1,10 @@
 import axios from "../../utils/axios";
 
-export const getJobs = async () => {
-    const response = await axios.get('/jobs')
+export const getJobs = async (query) => {
+    let queryString =
+        query && `q=${query}`
+
+    const response = await axios.get(`/jobs?${queryString}`)
 
     return response.data
 }

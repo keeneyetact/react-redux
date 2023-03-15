@@ -10,8 +10,8 @@ const initialState = {
 };
 
 // async thunks
-export const fetchJobs = createAsyncThunk ("job/fetchJobs", async () => {
-    const jobs = await getJobs()
+export const fetchJobs = createAsyncThunk ("job/fetchJobs", async (query) => {
+    const jobs = await getJobs(query)
 
     return jobs
 })
