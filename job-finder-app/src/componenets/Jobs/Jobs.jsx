@@ -9,8 +9,7 @@ const Jobs = () => {
   const dispatch = useDispatch()
   const { jobs } = useSelector(state => state.job)
   const { search, sort } = useSelector(state => state.filter)
-
-  console.log(query)
+  
 
   const filterBySearch =  ( job ) => {
     if (search === "") {

@@ -99,7 +99,7 @@ const Edit = () => {
 
             <div className="text-right">
               <button type="submit" id="lws-submit" className="cursor-pointer btn btn-primary w-fit">
-                Edit
+                Update
               </button>
             </div>
           </form>

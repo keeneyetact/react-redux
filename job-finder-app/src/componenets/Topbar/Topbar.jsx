@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { searchBy, sortBy } from '../../features/job/filter/filterSlice'
+import { searchBy, sortBy } from '../../features/filter/filterSlice'
 
 const Topbar = () => {
   const dispatch = useDispatch()
