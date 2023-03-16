@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Book = ({ book }) => {
-  const { name, author, thumbnail, price, rating, featured } = book;
+  const { id, name, author, thumbnail, price, rating, featured } = book;
   return (
     <div className="book-card">
           <img className="h-[240px] w-[170px] object-cover"
@@ -10,12 +11,14 @@ const Book = ({ book }) => {
             <div className="flex items-center justify-between">
               {featured && <span className="lws-badge">featured</span>}
               <div className="text-gray-500 space-x-2">
-                <button className="lws-edit ">
+                <Link to={`/edit/${id}`} >
+                <button  className="lws-edit ">
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                   </svg>
                 </button>
+                </Link>
                 <button className="lws-deleteBook">
                   <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
