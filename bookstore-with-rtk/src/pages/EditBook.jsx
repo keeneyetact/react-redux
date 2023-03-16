@@ -16,7 +16,7 @@ const EditBook = () => {
     const {bookId} = useParams()
     const [bookData, setBookData] = useState(initialBook)
     const { data: book, isError } = useGetBookQuery(bookId)
-    const [editBook, { isSuccess, isLoading }] = useEditBookMutation()
+    const [editBook, { isLoading }] = useEditBookMutation()
 
     useEffect(() => {
         book && setBookData(book)
@@ -30,7 +30,7 @@ const EditBook = () => {
         e.preventDefault()
         console.log(bookData)
         editBook({ id: bookId, data: bookData })
-        if(isSuccess) navigate('/')
+        navigate('/')
       }
 
       if(isError) {

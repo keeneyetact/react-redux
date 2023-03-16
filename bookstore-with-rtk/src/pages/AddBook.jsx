@@ -16,7 +16,7 @@ const initialBook = {
 const AddBook = () => {
     const navigate = useNavigate()
     const [bookData, setBookData] = useState(initialBook)
-    const [addBook, { isSuccess, isLoading }] = useAddBookMutation()
+    const [addBook, { isLoading }] = useAddBookMutation()
 
     const handleChange = (e) => {
         setBookData({...bookData, [e.target.name] : e.target.value})
