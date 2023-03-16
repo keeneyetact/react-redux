@@ -1,9 +1,21 @@
 import React from 'react'
 import Book from './Book'
 import { useGetBooksQuery } from '../features/api/apiSlice'
+import { useSelector } from 'react-redux'
 
 const Books = () => {
   const { data: books, isLoading, isError } = useGetBooksQuery()
+  const { search } = useSelector(state => state.filter.filter)
+
+  console.log(search)
+
+  const filterBySearch =  ( book ) => {
+    if (search === "") {
+      return book;
+    } else if (book.name.toLowerCase().includes(search.toLowerCase())) {
+      return book;
+    }
+  }
 
   // decide what to render
   let content = null;
@@ -33,7 +45,7 @@ const Books = () => {
   }
 
   if (!isLoading && !isError && books?.length > 0) {
-      content = books.map((book) => <Book key={book.id} book={book} />);
+      content = books.filter(filterBySearch).map((book) => <Book key={book.id} book={book} />);
   }
 
 
