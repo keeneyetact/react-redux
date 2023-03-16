@@ -5,15 +5,21 @@ import { useSelector } from 'react-redux'
 
 const Books = () => {
   const { data: books, isLoading, isError } = useGetBooksQuery()
-  const { search } = useSelector(state => state.filter.filter)
-
-  console.log(search)
+  const { search, isFeatured } = useSelector(state => state.filter.filter)
 
   const filterBySearch =  ( book ) => {
     if (search === "") {
       return book;
     } else if (book.name.toLowerCase().includes(search.toLowerCase())) {
       return book;
+    }
+  }
+
+  const filterByFeatured = (book) => {
+    if(isFeatured) {
+      return book.featured
+    } else {
+      return true
     }
   }
 
@@ -45,7 +51,7 @@ const Books = () => {
   }
 
   if (!isLoading && !isError && books?.length > 0) {
-      content = books.filter(filterBySearch).map((book) => <Book key={book.id} book={book} />);
+      content = books.filter(filterByFeatured).filter(filterBySearch).map((book) => <Book key={book.id} book={book} />);
   }
 
 
