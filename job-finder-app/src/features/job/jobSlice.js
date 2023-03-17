@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import { getJobs, addJob, editJob, deleteJob } from './jobAPI'
+import { getJobs, getJob, addJob, editJob, deleteJob } from './jobAPI'
 
 const initialState = {
     jobs: [],
@@ -14,6 +14,12 @@ export const fetchJobs = createAsyncThunk ("job/fetchJobs", async (query) => {
     const jobs = await getJobs(query)
 
     return jobs
+})
+
+export const fetchJob = createAsyncThunk ("job/fetchJob", async (jobId) => {
+    const job = await getJob(jobId)
+
+    return job
 })
 
 export const createJob = createAsyncThunk("job/creteJob", async (data) => {
@@ -40,14 +46,6 @@ export const removeJob = createAsyncThunk("job/removeJob", async (id) => {
 const jobSlice = createSlice({
     name: "job",
     initialState,
-    reducers: {
-        updateStart: (state, action) => {
-            state.updating = action.payload;
-        },
-        updateEnd: (state) => {
-            state.updating = {}
-        }
-    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchJobs.pending, (state) => {
@@ -64,6 +62,21 @@ const jobSlice = createSlice({
                 state.isError = true;
                 state.error = action.error?.message;
                 state.jobs = [];
+            })
+            .addCase(fetchJob.pending, (state) => {
+                state.isError = false;
+                state.isLoading = true;
+            })
+            .addCase(fetchJob.fulfilled, (state, action) => {
+                state.isError = false;
+                state.isLoading = false;
+                state.updating = action.payload;
+            })
+            .addCase(fetchJob.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.error = action.error?.message;
+                state.updating = [];
             })
             .addCase(createJob.pending, (state) => {
                 state.isError = false;
@@ -121,4 +134,3 @@ const jobSlice = createSlice({
 
 
 export default jobSlice.reducer;
-export const { updateStart, updateEnd } = jobSlice.actions

@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { updateEnd, updateJob } from '../features/job/jobSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { fetchJob, updateJob } from '../features/job/jobSlice'
 
 const Edit = () => {
-  const { updating } = useSelector(state => state.job)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const { jobId } = useParams()
+    useEffect(()=> {
+        dispatch(fetchJob(jobId))
+    },[jobId])
+
+    
+  const { updating } = useSelector(state => state.job)
+  
   const [title, setTitle] = useState('')
   const [type, setType] = useState('')
   const [salary, setSalary] = useState('')
@@ -14,8 +22,8 @@ const Edit = () => {
   const { id } = updating || {}
 
   useEffect(() => {
-    const { id, title, type, salary, deadline } = updating || {}
-    if(id){
+    const { title, type, salary, deadline } = updating || {}
+    if(jobId){
       setTitle(title)
       setType(type)
       setSalary(salary)
@@ -37,7 +45,6 @@ const Edit = () => {
     }
     dispatch(updateJob({id, data}))
     navigate('/')
-    dispatch(updateEnd())
   }
 
   return (

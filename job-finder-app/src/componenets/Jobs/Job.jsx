@@ -1,11 +1,12 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { removeJob, updateStart } from '../../features/job/jobSlice'
+import { removeJob } from '../../features/job/jobSlice'
 
 const Job = ({job}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const { id, title, type, salary, deadline } = job || {}
 
     const colorType = (color) => {
@@ -21,11 +22,11 @@ const Job = ({job}) => {
          }
 
     }
+    
 
     const handleEdit = (e) => {
         e.preventDefault()
-        dispatch(updateStart(job))
-        navigate('/edit')
+        navigate(`/edit/${id}`)
     }
 
     const handleDelete = (e) => {

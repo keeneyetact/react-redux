@@ -9,6 +9,12 @@ export const getJobs = async (query) => {
     return response.data
 }
 
+export const getJob =  async (jobId) => {
+    const response = await axios.get(`/jobs/${jobId}`)
+
+    return response.data;
+}
+
 export const addJob = async (data) => {
     const response = await axios.post('/jobs', data)
 
