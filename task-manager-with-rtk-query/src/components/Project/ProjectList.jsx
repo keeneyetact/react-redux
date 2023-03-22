@@ -1,6 +1,9 @@
 import React from 'react'
+import { useGetProjectsQuery } from '../../features/api/apiSlice'
 
 const ProjectList = () => {
+  const { data, isLoading, isSuccess, isError } = useGetProjectsQuery()
+  console.log(data)
   return (
     <div>
         <h3 class="text-xl font-bold">Projects</h3>
