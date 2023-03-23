@@ -22,7 +22,8 @@ const AddTask = () => {
     e.preventDefault()
     const teamSelected = teamList.find((t)=> t.name === teamMemberName)
     const projectSelected = projectList.find((p) => p.projectName === projectName)
-    addTask({ data: {project: projectSelected, taskName, deadline, teamMember: teamSelected}})
+    addTask({ data: {project: projectSelected, taskName, deadline, teamMember: teamSelected, status: 'Pending'}})
+    navigate('/')
   }
 
   // useEffect(()=> {

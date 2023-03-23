@@ -1,15 +1,29 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { useDeleteTaskMutation } from '../../features/task/taskApi'
+import { useDeleteTaskMutation, useEditTaskMutation } from '../../features/task/taskApi'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const Task = ({task}) => {
     const { taskName, teamMember, project, deadline, status, id } = task || {}
     const [deleteTask, { isLoading }] = useDeleteTaskMutation()
+    const [editTask, ] = useEditTaskMutation()
+    const [ newStatus, setNewStatus ] = useState('')
 
     const handleDelete = (e) => {
       e.preventDefault()
       deleteTask(id)
+    }
+
+    useEffect(()=> {
+      setNewStatus(status)
+    }, [status])
+
+    const handleStatus = (e) => {
+      e.preventDefault()
+      setNewStatus(e.target.value)
+      editTask({id, data: {...task, status: e.target.value}})
     }
     
   return (
@@ -46,7 +60,7 @@ const Task = ({task}) => {
                 </svg>
               </button> 
               </Link>}
-              <select className="lws-status" value={status} >
+              <select className="lws-status" value={newStatus} onChange={handleStatus} >
                 <option value="pending" selected>Pending</option>
                 <option value="inProgress">In Progress</option>
                 <option value="complete">Completed</option>
