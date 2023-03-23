@@ -3,6 +3,7 @@ const { createSlice } = require("@reduxjs/toolkit");
 const initialState = {
     filter: {
         project: [],
+        search: ''
     },
 };
 
@@ -18,8 +19,11 @@ const filterSlice = createSlice({
             state.filter.project.push(action.payload)
             }
         },
+        searchBy: (state, action) => {
+            state.filter.search = action.payload
+        }
     },
 });
 
 export default filterSlice.reducer;
-export const { filterBy } = filterSlice.actions;
+export const { filterBy, searchBy } = filterSlice.actions;

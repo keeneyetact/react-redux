@@ -4,8 +4,8 @@ import { useGetTasksQuery } from '../../features/task/taskApi'
 import Task from './Task'
 
 const TaskList = () => {
-  const { data, isSuccess, isError } = useGetTasksQuery()
-  const { project } = useSelector(state => state.filter.filter)
+  const { data } = useGetTasksQuery()
+  const { project, search } = useSelector(state => state.filter.filter)
 
   const filterByProject = (task) => {
     return !project.some((excludeProject) => {
@@ -13,10 +13,18 @@ const TaskList = () => {
     });
   }
 
+  const filterByTaskName = (task) => {
+    if(search === ''){
+      return task
+    } else if (task.taskName.toLowerCase().includes(search.toLowerCase())) {
+      return task
+    }
+  }
+
   return (
     <div className="lws-task-list">
           {
-            data && data.filter(filterByProject).map((task) => <Task task={task} key={task.id} />)
+            data && data.filter(filterByProject).filter(filterByTaskName).map((task) => <Task task={task} key={task.id} />)
           }
         </div>
   )
