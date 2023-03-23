@@ -1,9 +1,10 @@
 import React from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { useDeleteTaskMutation, useEditTaskMutation } from '../../features/task/taskApi'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Img from '../../utils/Img'
+import { useDeleteTaskMutation, useEditTaskMutation } from '../../features/task/taskApi'
 
 const Task = ({task}) => {
     const { taskName, teamMember, project, deadline, status, id } = task || {}
@@ -25,6 +26,8 @@ const Task = ({task}) => {
       setNewStatus(e.target.value)
       editTask({id, data: {...task, status: e.target.value}})
     }
+
+    const imgLink = Img(teamMember);
     
   return (
     <div className="lws-task">
@@ -40,7 +43,7 @@ const Task = ({task}) => {
 
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <img src="../../assets/images/avatars/sumit.png" alt='' className="team-avater" />
+                <img src={imgLink} alt='' className="team-avater" />
                 <p className="lws-task-assignedOn">{teamMember?.name}</p>
               </div>
               { status && status === 'complete' ? 
