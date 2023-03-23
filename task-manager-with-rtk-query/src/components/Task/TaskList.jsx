@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetTasksQuery } from '../../features/api/apiSlice'
+import { useGetTasksQuery } from '../../features/task/taskApi'
 import Task from './Task'
 
 const TaskList = () => {

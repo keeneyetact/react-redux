@@ -2,15 +2,15 @@ import React from 'react'
 
 const EditTask = () => {
   return (
-    <div class="container relative">
-      <main class="relative z-20 max-w-3xl mx-auto rounded-lg xl:max-w-none">
-        <h1 class="mt-4 mb-8 text-3xl font-bold text-center text-gray-800">
+    <div className="container relative">
+      <main className="relative z-20 max-w-3xl mx-auto rounded-lg xl:max-w-none">
+        <h1 className="mt-4 mb-8 text-3xl font-bold text-center text-gray-800">
           Create Task for Your Team
         </h1>
 
-        <div class="justify-center mb-10 space-y-2 md:flex md:space-y-0">
-          <form class="space-y-6">
-            <div class="fieldContainer">
+        <div className="justify-center mb-10 space-y-2 md:flex md:space-y-0">
+          <form className="space-y-6">
+            <div className="fieldContainer">
               <label for="lws-taskName">Task Name</label>
               <input
                 type="text"
@@ -21,7 +21,7 @@ const EditTask = () => {
               />
             </div>
 
-            <div class="fieldContainer">
+            <div className="fieldContainer">
               <label>Assign To</label>
               <select name="teamMember" id="lws-teamMember" required>
                 <option value="" hidden selected>Select Job</option>
@@ -34,7 +34,7 @@ const EditTask = () => {
                 <option>Arif Almas</option>
               </select>
             </div>
-            <div class="fieldContainer">
+            <div className="fieldContainer">
               <label for="lws-projectName">Project Name</label>
               <select id="lws-projectName" name="projectName" required>
                 <option value="" hidden selected>Select Project</option>
@@ -47,13 +47,13 @@ const EditTask = () => {
               </select>
             </div>
 
-            <div class="fieldContainer">
+            <div className="fieldContainer">
               <label for="lws-deadline">Deadline</label>
               <input type="date" name="deadline" id="lws-deadline" required />
             </div>
 
-            <div class="text-right">
-              <button type="submit" class="lws-submit">Save</button>
+            <div className="text-right">
+              <button type="submit" className="lws-submit">Save</button>
             </div>
           </form>
         </div>
