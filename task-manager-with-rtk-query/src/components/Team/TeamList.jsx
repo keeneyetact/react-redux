@@ -4,7 +4,6 @@ import TeamMember from './TeamMember'
 
 const TeamList = () => {
   const { data, isError, isLoading } = useGetTeamQuery()
-  console.log(data)
 
   return (
     <div className="mt-8">

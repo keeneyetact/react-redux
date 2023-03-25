@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { useGetTasksQuery } from '../../features/task/taskApi'
+import { useGetAllTaskQuery } from '../../features/task/taskApi'
 import Task from './Task'
 
 const TaskList = () => {
-  const { data } = useGetTasksQuery()
+  const { data } = useGetAllTaskQuery()
   const { project, search } = useSelector(state => state.filter.filter)
 
   const filterByProject = (task) => {
@@ -24,7 +24,7 @@ const TaskList = () => {
   return (
     <div className="lws-task-list">
           {
-            data && data.filter(filterByProject).filter(filterByTaskName).map((task) => <Task task={task} key={task.id} />)
+            data && data.filter(filterByProject).filter(filterByTaskName).map((task) => <Task key={task.id} task={task}/>)
           }
         </div>
   )

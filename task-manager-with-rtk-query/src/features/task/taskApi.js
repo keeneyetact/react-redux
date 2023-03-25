@@ -2,40 +2,32 @@ import { apiSlice } from "../api/apiSlice";
 
 export const taskApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getTasks: builder.query({
+        getAllTask: builder.query({
             query: () => "/tasks",
         }),
-        getTask: builder.query({
+        getSingleTask: builder.query({
             query: (id) => `/tasks/${id}`,
         }),
         addTask: builder.mutation({
             query: ({data}) => ({
-                url: '/tasks',
+                url: "/tasks",
                 method: 'POST',
                 body: data
             }),
-            async onQueryStarted(data, {queryFulfilled, dispatch}) {
-                console.log('here')
+            async onQueryStarted(arg, {dispatch, queryFulfilled}) {
                 try {
-                    const task = await queryFulfilled;
-                    if(task?.data) {
-                        console.log('task', task)
+                    const {data: addedTask} = await queryFulfilled;
+                    if(addedTask?.id) {
                         // update task cache pessimistcally start
-                        dispatch(
-                            apiSlice.util.updateQueryData(
-                                "getTasks",
-                                data,
-                                (draft) => {
-                                    console.log({draft, task})
-                                    Object.assign(draft, data)
-                                }
-                            )
-                        );
+                        dispatch(apiSlice.util.updateQueryData("getAllTask", undefined, (draft) => {
+                            // console.log("Draft:", arg, JSON.stringify(draft));
+                            draft.push(addedTask);
+                        }));                        
                         //update task cache end
                     }
                 } catch (error) {
                     // error handle
-                    console.log(error)
+                    console.log(error.message)
                 }
             }
         }),
@@ -44,24 +36,23 @@ export const taskApi = apiSlice.injectEndpoints({
                 url: `/tasks/${id}`,
                 method: 'DELETE',
             }),
-            async onQueryStarted(id, { queryFulfilled, dispatch}) {
+            async onQueryStarted(arg, { queryFulfilled, dispatch}) {
                 // optimistic cache update
                 const deleteResult = dispatch(
                     apiSlice.util.updateQueryData(
-                        "getTasks",
-                        id,
+                        "getAllTask",
+                        undefined,
                         (draft) => {
-                            console.log("draft before update:", draft);
-                            draft.data = draft.data.filter(d => d.id !== id.toString())
+                            // console.log("Draft:", arg, JSON.stringify(draft));
+                            return draft.filter(d => d.id !== arg)
                         }
                     )
                 )
-                console.log('here')
                 // optimistic cache update end
                 try {
-                    console.log('here')
-                    await queryFulfilled(deleteResult)
+                    await queryFulfilled
                 } catch (error) {
+                    console.log(error)
                     deleteResult.undo()
                 }
             }
@@ -72,24 +63,22 @@ export const taskApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data
             }),
-            async onQueryStarted(args, {queryFulfilled, dispatch}) {
-                console.log('here')
+            async onQueryStarted(arg, {queryFulfilled, dispatch}) {
                 try {
                     const task = await queryFulfilled;
                     if(task?.data) {
-                        console.log('task', task)
                         // update task cache pessimistcally start
                         dispatch(
                             apiSlice.util.updateQueryData(
-                                "getTasks",
-                                args,
+                                "getAllTask",
+                                undefined,
                                 (draft) => {
-                                    console.log({draft, task})
-                                    draft.data = draft.data.map(d => d.id === args.id.toString() ? task?.data : d)
+                                    return draft.map(d => d.id == arg.id ? task.data : d)
                                 }
                             )
                         );
                         //update task cache end
+                        dispatch(apiSlice.util.updateQueryData("getSingleTask", arg?.id, (draft) => task.data))
                     }
                 } catch (error) {
                     // error handle
@@ -101,8 +90,8 @@ export const taskApi = apiSlice.injectEndpoints({
 })
 
 export const {
-    useGetTasksQuery,
-    useGetTaskQuery,
+    useGetAllTaskQuery,
+    useGetSingleTaskQuery,
     useAddTaskMutation,
     useEditTaskMutation,
     useDeleteTaskMutation

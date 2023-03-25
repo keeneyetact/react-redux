@@ -3,14 +3,14 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetProjectsQuery, useGetTeamQuery } from '../features/api/apiSlice'
-import { useEditTaskMutation, useGetTaskQuery } from '../features/task/taskApi'
+import { useEditTaskMutation, useGetSingleTaskQuery } from '../features/task/taskApi'
 
 const EditTask = () => {
   const navigate = useNavigate()
   const {taskId} = useParams()
   const { data: teamList } = useGetTeamQuery()
   const { data: projectList } = useGetProjectsQuery()
-  const { data: currentTask } = useGetTaskQuery(taskId)
+  const { data: currentTask } = useGetSingleTaskQuery(taskId)
   const [editTask, { isLoading, isSuccess}] = useEditTaskMutation()
 
   const [ projectName, setProjectName] = useState('')
