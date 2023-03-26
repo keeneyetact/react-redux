@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../../components/student/Navbar'
-import QuizList from '../../components/student/quiz/QuizList'
+import Navbar from '../components/Navbar'
+import QuizList from '../components/quiz/QuizList'
 
 const Quiz = () => {
   return (

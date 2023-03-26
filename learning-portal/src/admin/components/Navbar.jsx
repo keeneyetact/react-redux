@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import LearningPortal from '../../assets/image/learningportal.svg'
 
 const Navbar = () => {
@@ -8,11 +7,9 @@ const Navbar = () => {
         <div className="max-w-7xl px-5 lg:px-0 mx-auto flex justify-between py-3">
             <img className="h-10" src={LearningPortal} alt="" />
             <div className="flex items-center gap-3">
-                <Link to="/leaderboard" >Leaderboard</Link>
-                <Link to="/course-player" >Course</Link>
-                <h2 className="font-bold">Saad Hasan</h2>
+                <h2 className="font-bold">Admin</h2>
                 <button
-                    className="flex gap-2 border border-cyan items-center px-4 py-1 rounded-full text-sm transition-all hover:bg-cyan ">
+                    className="flex gap-2 items-center px-4 py-1 rounded-full text-sm transition-all bg-red-600 hover:bg-red-700 font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" className="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
