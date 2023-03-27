@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 // Student Pages
-import CoursePlayer from './student/pages/CoursePlayer';
-import Leaderboard from './student/pages/Leaderboard';
-import StudentLogin from './student/pages/Login';
-import Quiz from './student/pages/Quiz';
-import StudentRegistration from './student/pages/Registration';
+import CoursePlayer from './pages/student/CoursePlayer';
+import Leaderboard from './pages/student/Leaderboard';
+import StudentLogin from './pages/student/Login';
+import Quiz from './pages/student/Quiz';
+import StudentRegistration from './pages/student/Registration';
 
 // Admin Pages
-import AdminLogin from './admin/pages/Login';
-import Dashboard from './admin/pages/Dashboard';
-import AddAssignment from './admin/pages/Assignment';
-import AssignmentMark from './admin/pages/AssignmentMark';
-import Quizzes from './admin/pages/Quizzes';
-import Videos from './admin/pages/Videos';
+import AdminLogin from './pages/admin/Login';
+import Dashboard from './pages/admin/Dashboard';
+import AddAssignment from './pages/admin/Assignment';
+import AssignmentMark from './pages/admin/AssignmentMark';
+import Quizzes from './pages/admin/Quizzes';
+import Videos from './pages/admin/Videos';
 
 function App() {
   return (

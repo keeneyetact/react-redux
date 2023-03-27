@@ -1,7 +1,7 @@
 import React from 'react'
-import CourseVideo from '../components/course/CourseVideo'
-import CourseVideoList from '../components/course/CourseVideoList'
-import Navbar from '../components/Navbar'
+import CourseVideo from '../../components/student/course/CourseVideo'
+import CourseVideoList from '../../components/student/course/CourseVideoList'
+import Navbar from '../../components/comon/Navbar'
 
 const CoursePlayer = () => {
   return (

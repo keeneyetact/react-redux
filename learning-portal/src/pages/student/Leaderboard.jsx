@@ -1,7 +1,7 @@
 import React from 'react'
-import MyRank from '../components/leaderboard/MyRank'
-import TopRank from '../components/leaderboard/TopRank'
-import Navbar from '../components/Navbar'
+import MyRank from '../../components/student/leaderboard/MyRank'
+import TopRank from '../../components/student/leaderboard/TopRank'
+import Navbar from '../../components/student/Navbar'
 
 const Leaderboard = () => {
   return (
