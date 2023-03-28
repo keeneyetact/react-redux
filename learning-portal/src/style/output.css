@@ -1502,7 +1502,7 @@ body {
 
 /* Error.css */
 .bg-red-200 {
-  background-color: red !important;
+  background-color: rgb(163, 0, 0) !important;
 }
 
 .text-red-800 {
