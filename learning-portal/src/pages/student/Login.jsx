@@ -1,8 +1,35 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import LearningPortal from '../../assets/image/learningportal.svg'
+import { useLoginMutation } from '../../features/auth/authApi'
 
 const Login = () => {
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [login, { data: loginData, error: loginError}] = useLoginMutation()
+   
+    useEffect(()=> {
+        if(loginError?.data) setError(loginError.data)
+
+        if(loginData?.accessToken && loginData?.user) navigate("/courses")
+
+    },[loginData, loginError, navigate])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        setError("")
+
+        login({
+            email,
+            password
+        })
+    }
+
   return (
     <div className="py-6 bg-primary h-screen grid place-items-center">
         <div className="mx-auto max-w-md px-5 lg:px-0">
@@ -12,18 +39,19 @@ const Login = () => {
                     Sign in to Student Account
                 </h2>
             </div>
-            <form className="mt-8 space-y-6" action="#" method="POST">
-                <input type="hidden" name="remember" value="true" />
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit} >
                 <div className="rounded-md shadow-sm -space-y-px">
                     <div>
                         <label for="email-address" className="sr-only">Email address</label>
-                        <input id="email-address" name="email" type="email" autocomplete="email" required
-                            className="login-input rounded-t-md" placeholder="Email address" />
+                        <input id="email-address" name="email" type="email" autoComplete="email" required
+                               value={email} onChange={(e)=> setEmail(e.target.value)}
+                               className="login-input rounded-t-md" placeholder="Email address" />
                     </div>
                     <div>
                         <label for="password" className="sr-only">Password</label>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required
-                            className="login-input rounded-b-md" placeholder="Password" />
+                        <input id="password" name="password" type="password" autoComplete="current-password" required
+                               value={password} onChange={(e)=> setPassword(e.target.value)}
+                               className="login-input rounded-b-md" placeholder="Password" />
                     </div>
                 </div>
 

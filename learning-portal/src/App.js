@@ -23,7 +23,7 @@ function App() {
         {/* Student Routes */}
         <Route path="/" element={<StudentLogin />} />
         <Route path="/registration" element={<StudentRegistration />} />
-        <Route path='/course-player' element={<CoursePlayer />} />
+        <Route path='/courses' element={<CoursePlayer />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/quiz' element={<Quiz />} />
 
