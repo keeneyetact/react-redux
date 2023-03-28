@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LearningPortal from '../../assets/image/learningportal.svg'
+import Error from '../../components/comon/Error'
 import { useLoginMutation } from '../../features/auth/authApi'
 
 const Login = () => {
@@ -69,6 +70,8 @@ const Login = () => {
                         Sign in
                     </button>
                 </div>
+
+                {error !== "" && <Error message={error} />}
             </form>
         </div>
     </div>

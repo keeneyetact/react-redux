@@ -1498,3 +1498,17 @@ body {
     }
   }
 }
+
+
+/* Error.css */
+.bg-red-200 {
+  background-color: red !important;
+}
+
+.text-red-800 {
+  color: white !important;
+}
+.text-green-800 {
+  color: green !important;
+}
+
