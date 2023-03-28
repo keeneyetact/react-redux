@@ -1,11 +1,9 @@
 import React from 'react'
-import Navbar from '../../components/student/Navbar'
 import QuizList from '../../components/student/quiz/QuizList'
 
 const Quiz = () => {
   return (
     <div>
-        <Navbar />
         <section class="py-6 bg-primary">
     <div class="mx-auto max-w-7xl px-5 lg:px-0">
       <div class="mb-8">

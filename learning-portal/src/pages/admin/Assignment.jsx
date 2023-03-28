@@ -1,10 +1,8 @@
 import React from 'react'
-import Navbar from '../../components/comon/Navbar'
 
 const Assignment = () => {
   return (
     <div>
-        <Navbar />
     <div className="py-6 bg-primary">
     <div className="mx-auto max-w-full px-5 lg:px-20">
         <div className="px-3 py-20 bg-opacity-10">

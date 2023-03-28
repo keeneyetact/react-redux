@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 
 // Common pages
 import Login from './pages/Login';
+import Navbar from './components/common/Navbar';
 
 // Student Pages
 import CoursePlayer from './pages/student/CoursePlayer';
@@ -17,8 +18,19 @@ import Quizzes from './pages/admin/Quizzes';
 import Videos from './pages/admin/Videos';
 
 function App() {
+
+  // Use the useLocation hook to get the current path
+  const location = useLocation();
+
+  // Hide Navbar from login, registration, and admin login pages
+  const hideNavbar =
+    location.pathname === '/' ||
+    location.pathname === '/registration' ||
+    location.pathname === '/admin';
+
   return (
-    <Router>
+    <>
+      {!hideNavbar && <Navbar />}
       <Routes>
 
         {/* Student Routes */}
@@ -37,7 +49,7 @@ function App() {
         <Route path='/admin/videos' element={<Videos />} />
 
       </Routes>
-    </Router>
+    </>
   );
 }
 
