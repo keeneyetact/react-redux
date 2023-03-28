@@ -1,5 +1,9 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 
+import AdminRoute from './utils/AdminRoute';
+import PublicRoute from './utils/PublicRoute';
+import StudentRoute from './utils/StudentRoute';
+
 // Common pages
 import Login from './pages/Login';
 import Navbar from './components/common/Navbar';
@@ -16,9 +20,12 @@ import AddAssignment from './pages/admin/Assignment';
 import AssignmentMark from './pages/admin/AssignmentMark';
 import Quizzes from './pages/admin/Quizzes';
 import Videos from './pages/admin/Videos';
+import useAuthCheck from './hooks/useAuthCheck';
 
-function App() {
-
+function App () {
+  // Upadting redux store from localstorage
+  const authChecked = useAuthCheck();
+  
   // Use the useLocation hook to get the current path
   const location = useLocation();
 
@@ -28,25 +35,27 @@ function App() {
     location.pathname === '/registration' ||
     location.pathname === '/admin';
 
-  return (
+  return ( !authChecked ? 
+    <div>Checking authenticated....</div> 
+    :
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
 
         {/* Student Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/registration" element={<StudentRegistration />} />
-        <Route path='/courses' element={<CoursePlayer />} />
-        <Route path='/leaderboard' element={<Leaderboard />} />
-        <Route path='/quiz' element={<Quiz />} />
+        <Route path="/" element={ <PublicRoute> <Login /> </PublicRoute> } />
+        <Route path="/registration" element={ <PublicRoute> <StudentRegistration /> </PublicRoute> } />
+        <Route path='/courses' element={ <StudentRoute> <CoursePlayer /> </StudentRoute> } />
+        <Route path='/leaderboard' element={ <StudentRoute> <Leaderboard /> </StudentRoute> } />
+        <Route path='/quiz' element={ <StudentRoute> <Quiz /> </StudentRoute> } />
 
         {/* Admin Routes */}
-        <Route path='/admin' element={<Login />} />
-        <Route path='/admin/dashboard' element={<Dashboard />} />
-        <Route path='/admin/assignment' element={<AddAssignment />} />
-        <Route path='/admin/assignment-mark' element={<AssignmentMark />} />
-        <Route path='/admin/quizzes' element={<Quizzes />} />
-        <Route path='/admin/videos' element={<Videos />} />
+        <Route path='/admin' element={ <PublicRoute> <Login /> </PublicRoute> } />
+        <Route path='/admin/dashboard' element={ <AdminRoute> <Dashboard /> </AdminRoute> } />
+        <Route path='/admin/assignment' element={ <AdminRoute> <AddAssignment /> </AdminRoute> } />
+        <Route path='/admin/assignment-mark' element={ <AdminRoute> <AssignmentMark /> </AdminRoute> } />
+        <Route path='/admin/quizzes' element={ <AdminRoute> <Quizzes /> </AdminRoute> } />
+        <Route path='/admin/videos' element={ <AdminRoute> <Videos /> </AdminRoute> } />
 
       </Routes>
     </>

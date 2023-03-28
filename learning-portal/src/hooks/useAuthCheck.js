@@ -4,7 +4,7 @@ import { userLoggedIn } from "../features/auth/authSlice";
 
 
 export default function useAuthCheck() {
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
     const [authChecked, setAuthChecked] = useState(false)
 
     useEffect(()=> {
