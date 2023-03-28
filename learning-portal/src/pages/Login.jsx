@@ -1,22 +1,28 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import LearningPortal from '../../assets/image/learningportal.svg'
-import Error from '../../components/comon/Error'
-import { useLoginMutation } from '../../features/auth/authApi'
+import Error from '../components/comon/Error'
+import { useLoginMutation } from '../features/auth/authApi'
 
 const Login = () => {
     const navigate = useNavigate()
+    const location = useLocation();
+  
+    const isAdmin = location.pathname.includes('/admin');
+
     const [error, setError] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     const [login, { data: loginData, isLoading, error: loginError}] = useLoginMutation()
    
     useEffect(()=> {
         if(loginError?.data) setError(loginError.data)
 
-        if(loginData?.accessToken && loginData?.user) navigate("/courses")
+        if(loginData?.accessToken && loginData?.user && loginData?.user?.role === 'student') navigate("/courses")
+        if(loginData?.accessToken && loginData?.user && loginData?.user?.role === 'admin') navigate("/admin/dashboard")
 
     },[loginData, loginError, navigate])
 
@@ -37,7 +43,7 @@ const Login = () => {
             <div>
                 <img className="h-12 mx-auto" src={LearningPortal} alt="" />
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-100">
-                    Sign in to Student Account
+                    Sign in to {isAdmin ? 'Admin' : 'Student'} Account
                 </h2>
             </div>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit} >
@@ -58,9 +64,9 @@ const Login = () => {
 
                 <div className="flex items-center justify-end">
                     <div className="text-sm">
-                        <Link to="/registration" className="font-medium text-violet-600 hover:text-violet-500">
+                       {isAdmin ? '' : <Link to="/registration" className="font-medium text-violet-600 hover:text-violet-500">
                             Create New Account
-                        </Link>
+                        </Link>}
                     </div>
                 </div>
 

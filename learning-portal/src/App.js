@@ -1,14 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+// Common pages
+import Login from './pages/Login';
+
 // Student Pages
 import CoursePlayer from './pages/student/CoursePlayer';
 import Leaderboard from './pages/student/Leaderboard';
-import StudentLogin from './pages/student/Login';
 import Quiz from './pages/student/Quiz';
 import StudentRegistration from './pages/student/Registration';
 
 // Admin Pages
-import AdminLogin from './pages/admin/Login';
 import Dashboard from './pages/admin/Dashboard';
 import AddAssignment from './pages/admin/Assignment';
 import AssignmentMark from './pages/admin/AssignmentMark';
@@ -21,14 +22,14 @@ function App() {
       <Routes>
 
         {/* Student Routes */}
-        <Route path="/" element={<StudentLogin />} />
+        <Route path="/" element={<Login />} />
         <Route path="/registration" element={<StudentRegistration />} />
         <Route path='/courses' element={<CoursePlayer />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/quiz' element={<Quiz />} />
 
         {/* Admin Routes */}
-        <Route path='/admin' element={<AdminLogin />} />
+        <Route path='/admin' element={<Login />} />
         <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/assignment' element={<AddAssignment />} />
         <Route path='/admin/assignment-mark' element={<AssignmentMark />} />
