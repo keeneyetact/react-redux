@@ -46,7 +46,7 @@ export const videosApi = apiSlice.injectEndpoints({
                                 "getVideos",
                                 undefined,
                                 (draft) => {
-                                    draft.map(d => d.id == arg.id ? editedVideo : d )
+                                   return draft.map(d => d.id == arg.id ? editedVideo : d )
                                 }
                             )
                         )
@@ -79,7 +79,7 @@ export const videosApi = apiSlice.injectEndpoints({
                         "getVideos",
                         undefined,
                         (draft) => {
-                            draft.filter(d => d.id !== arg)
+                           return draft.filter(d => d.id !== arg)
                         }
                     )
                 )
