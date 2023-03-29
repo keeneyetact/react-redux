@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import AdminRoute from './utils/AdminRoute';
 import PublicRoute from './utils/PublicRoute';
 import StudentRoute from './utils/StudentRoute';
+import useAuthCheck from './hooks/useAuthCheck';
 
 // Common pages
 import Login from './pages/Login';
@@ -20,8 +21,8 @@ import AddAssignment from './pages/admin/Assignment';
 import AssignmentMark from './pages/admin/AssignmentMark';
 import Quizzes from './pages/admin/Quizzes';
 import Videos from './pages/admin/Videos';
-import useAuthCheck from './hooks/useAuthCheck';
 import AddVideo from './pages/admin/AddVideo';
+import EditVideo from './pages/admin/EditVideo';
 
 function App () {
   // Upadting redux store from localstorage
@@ -58,6 +59,7 @@ function App () {
         <Route path='/admin/quizzes' element={ <AdminRoute> <Quizzes /> </AdminRoute> } />
         <Route path='/admin/videos' element={ <AdminRoute> <Videos /> </AdminRoute> } />
         <Route path='/admin/videos/add' element={ <AdminRoute> <AddVideo /> </AdminRoute> } />
+        <Route path='/admin/videos/edit/:id' element={ <AdminRoute> <EditVideo /> </AdminRoute> } />
 
       </Routes>
     </>
