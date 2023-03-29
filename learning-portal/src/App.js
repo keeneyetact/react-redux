@@ -21,6 +21,7 @@ import AssignmentMark from './pages/admin/AssignmentMark';
 import Quizzes from './pages/admin/Quizzes';
 import Videos from './pages/admin/Videos';
 import useAuthCheck from './hooks/useAuthCheck';
+import AddVideo from './pages/admin/AddVideo';
 
 function App () {
   // Upadting redux store from localstorage
@@ -56,6 +57,7 @@ function App () {
         <Route path='/admin/assignment-mark' element={ <AdminRoute> <AssignmentMark /> </AdminRoute> } />
         <Route path='/admin/quizzes' element={ <AdminRoute> <Quizzes /> </AdminRoute> } />
         <Route path='/admin/videos' element={ <AdminRoute> <Videos /> </AdminRoute> } />
+        <Route path='/admin/videos/add' element={ <AdminRoute> <AddVideo /> </AdminRoute> } />
 
       </Routes>
     </>
