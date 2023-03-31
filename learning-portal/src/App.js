@@ -25,6 +25,7 @@ import Videos from './pages/admin/Videos';
 import AddVideo from './pages/admin/AddVideo';
 import EditVideo from './pages/admin/EditVideo';
 import EditAssignment from './pages/admin/EditAssignment';
+import AddQuiz from './pages/admin/AddQuiz';
 
 function App () {
   // Upadting redux store from localstorage
@@ -61,6 +62,7 @@ function App () {
         <Route path='/admin/assignment/edit/:id' element={ <AdminRoute> <EditAssignment /> </AdminRoute> } />
         <Route path='/admin/assignment-mark' element={ <AdminRoute> <AssignmentMark /> </AdminRoute> } />
         <Route path='/admin/quizzes' element={ <AdminRoute> <Quizzes /> </AdminRoute> } />
+        <Route path='/admin/quizzes/add' element={ <AdminRoute> <AddQuiz /> </AdminRoute> } />
         <Route path='/admin/videos' element={ <AdminRoute> <Videos /> </AdminRoute> } />
         <Route path='/admin/videos/add' element={ <AdminRoute> <AddVideo /> </AdminRoute> } />
         <Route path='/admin/videos/edit/:id' element={ <AdminRoute> <EditVideo /> </AdminRoute> } />
