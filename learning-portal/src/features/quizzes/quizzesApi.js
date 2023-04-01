@@ -54,7 +54,7 @@ const quizzesApi = apiSlice.injectEndpoints({
                         // update single quiz cache
                         dispatch(
                             apiSlice.util.updateQueryData(
-                                "getVideo",
+                                "getQuiz",
                                 arg?.id,
                                 (draft) => editedQuiz
                             )

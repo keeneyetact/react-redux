@@ -1,14 +1,15 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useGetVideosQuery } from '../../../features/videos/videosApi';
-import { useAddQuizMutation } from '../../../features/quizzes/quizzesApi';
+import { useAddQuizMutation, useEditQuizMutation } from '../../../features/quizzes/quizzesApi';
 import { useNavigate } from 'react-router-dom';
 import Error from '../../common/Error';
 
-const QuizForm = () => {
+const QuizForm = ({ quizData }) => {
     const navigate = useNavigate()
     const { data: videoList} = useGetVideosQuery()
-    const [ addQuiz, { isLoading, isSuccess, error: addError} ] = useAddQuizMutation()
+    const [ addQuiz, { isLoading: addLoading, isSuccess: addSuccess, error: addError} ] = useAddQuizMutation()
+    const [ editQuiz, { isLoading: editLoading, isSuccess: editSuccess, error: editError} ] = useEditQuizMutation()
 
     const [ error, setError ] = useState('')
     const [ videoId, setVideoId ] = useState()
@@ -20,6 +21,16 @@ const QuizForm = () => {
         { id: 3, option: '', isCorrect: false },
         { id: 4, option: '', isCorrect: false },
       ])
+
+    useEffect(()=> {
+        if(quizData?.id) {
+        setQuestion(quizData?.question)
+        setVideoId(quizData?.video_id)
+        setVideoTitle(quizData?.video_title)
+        setOptions(quizData?.options)
+        }
+    },[quizData])
+    
     
     const handleQuestionChange = (e) => {
       setQuestion(e.target.value);
@@ -123,17 +134,21 @@ const handleSubmit = (e) => {
   };
   console.log(data, videoId);
   // Send POST request to server with data
-  addQuiz({data})
+  if (quizData) {
+    editQuiz({id: quizData?.id, data})
+  } else {
+    addQuiz({data})
+  }
 };
 
 useEffect(()=> {
-    if(addError?.data) setError("Something went wrong. Please, give a refresh and try again!!!")
+    if(addError?.data || editError?.data) setError("Something went wrong. Please, give a refresh and try again!!!")
     // console.log(addError)
-},[addError])
+},[addError, editError])
 
 useEffect(()=> {
-      if(isSuccess) navigate('/admin/quizzes')
-},[isSuccess, navigate])
+      if(addSuccess || editSuccess) navigate('/admin/quizzes')
+},[addSuccess, editSuccess, navigate])
 
 
   return (
@@ -144,7 +159,7 @@ useEffect(()=> {
       </div>
       <div className="my-4">
         <label htmlFor="options" className="font-semibold text-lg mb-2 block">Options</label>
-        {options.map((option) => (
+        {options?.map((option) => (
         <div className="flex justify-center items-center w-full mb-2" key={option.id}>
           <input
             className="h-6 w-6 text-blue-600 "
@@ -174,12 +189,14 @@ useEffect(()=> {
                                 onChange={e => { setVideoTitle(e.target.value); setVideoId(e.target.options[e.target.selectedIndex].getAttribute('id')); }} 
                                 className="video-form-input rounded" required>
                                 <option value="" hidden selected>Select Video Here..</option>
-                                { videoList && videoList.map(v => <option key={v.id} value={v.title} id={v.id} >{v.title}</option>)}
+                                { videoList && videoList?.map(v => <option key={v.id} value={v.title} id={v.id} >{v.title}</option>)}
                             </select>
                     </div>
       </div>
       <div className="my-4">
-        <button disabled={isLoading} type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Create Quiz</button>
+        <button disabled={addLoading || editLoading} type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">
+        {quizData ? 'Update Quiz' : 'Create Quiz'}
+        </button>
       </div>
       {error !== "" && <Error message={error} />}
     </form>
