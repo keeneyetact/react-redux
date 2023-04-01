@@ -1,12 +1,29 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGetVideosQuery } from '../../../features/videos/videosApi';
+import { useAddQuizMutation } from '../../../features/quizzes/quizzesApi';
+import { useNavigate } from 'react-router-dom';
+import Error from '../../common/Error';
 
 const QuizForm = () => {
+    const navigate = useNavigate()
     const { data: videoList} = useGetVideosQuery()
-    const [videoId, setVideoId] = useState()
-    const [ videoTitle, setVideoTitle] = useState()
+    const [ addQuiz, { isLoading, isSuccess, error: addError} ] = useAddQuizMutation()
 
+    const [ error, setError ] = useState('')
+    const [ videoId, setVideoId ] = useState()
+    const [ videoTitle, setVideoTitle ] = useState()
+    const [question, setQuestion] = useState("");
+    const [options, setOptions] = useState([
+        { id: 1, option: '', isCorrect: false },
+        { id: 2, option: '', isCorrect: false },
+        { id: 3, option: '', isCorrect: false },
+        { id: 4, option: '', isCorrect: false },
+      ])
+    
+    const handleQuestionChange = (e) => {
+      setQuestion(e.target.value);
+    };
 
 //   const handleOptionChange = (optionId) => {
 //     const newOptions = options.map((option) => {
@@ -51,20 +68,6 @@ const QuizForm = () => {
 //     setOptions(newOptions);
 //   };
 
-
-const [question, setQuestion] = useState("");
-// const [options, setOptions] = useState([{ option: "", isCorrect: false }]);
-const [options, setOptions] = useState([
-    { id: 1, option: '', isCorrect: false },
-    { id: 2, option: '', isCorrect: false },
-    { id: 3, option: '', isCorrect: false },
-    { id: 4, option: '', isCorrect: false },
-  ]);
-const [correctAnswer, setCorrectAnswer] = useState("");
-
-const handleQuestionChange = (e) => {
-  setQuestion(e.target.value);
-};
 
 // const handleOptionChange = (e, index) => {
 //   const newOptions = [...options];
@@ -115,11 +118,22 @@ const handleSubmit = (e) => {
   const data = {
     question: question,
     options: options,
-    correctAnswer: correctAnswer,
+    video_id: Number(videoId),
+    video_title: videoTitle
   };
-  console.log(data);
+  console.log(data, videoId);
   // Send POST request to server with data
+  addQuiz({data})
 };
+
+useEffect(()=> {
+    if(addError?.data) setError("Something went wrong. Please, give a refresh and try again!!!")
+    // console.log(addError)
+},[addError])
+
+useEffect(()=> {
+      if(isSuccess) navigate('/admin/quizzes')
+},[isSuccess, navigate])
 
 
   return (
@@ -165,8 +179,9 @@ const handleSubmit = (e) => {
                     </div>
       </div>
       <div className="my-4">
-        <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Create Quiz</button>
+        <button disabled={isLoading} type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Create Quiz</button>
       </div>
+      {error !== "" && <Error message={error} />}
     </form>
   );
 

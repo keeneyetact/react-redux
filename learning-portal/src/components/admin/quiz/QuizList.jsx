@@ -7,14 +7,14 @@ const QuizList = () => {
     const {data} = useGetQuizzesQuery()
     const navigate = useNavigate()
 
-    const hnadleClick = (e) => {
+    const handleClick = (e) => {
         e.preventDefault();
         navigate('/admin/quizzes/add')
     }
   return (
     <div className="px-3 py-20 bg-opacity-10">
                 <div className="w-full flex">
-                    <button onClick={hnadleClick} className="btn ml-auto">Add Quiz</button>
+                    <button onClick={handleClick} className="btn ml-auto">Add Quiz</button>
                 </div>
                 <div className="overflow-x-auto mt-4">
                     <table className="divide-y-1 text-base divide-gray-600 w-full">
