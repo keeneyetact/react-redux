@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux'
 import { useGetVideosQuery } from '../../../features/videos/videosApi'
+import { selectedVideo } from '../../../features/videos/videoSlice';
 
 const CourseVideoList = () => {
+    const dispatch = useDispatch()
     const { data: videoList } = useGetVideosQuery()
-    const [selectedVideo, setSelectedVideo] = useState()
+    const [selectVideo, setSelectVideo] = useState()
 
     useEffect(()=>{
-        if(videoList && !selectedVideo) setSelectedVideo(videoList[0])
-    },[videoList, selectedVideo])
+        if(videoList && !selectVideo) {
+            setSelectVideo(videoList[0])
+            dispatch(selectedVideo(videoList[0]))
+        }
+    },[videoList])
 
-    console.log(selectedVideo)
     const handleVideoClick = (video) => {
-        setSelectedVideo(video)
+        setSelectVideo(video)
+        dispatch(selectedVideo(video))
       }
 
   return (
@@ -19,7 +25,7 @@ const CourseVideoList = () => {
 
                 {videoList && videoList.map((video) => (
                     <div key={video?.id} className={`w-full flex flex-row gap-2 cursor-pointer hover:bg-slate-900 
-                         p-2 py-3 ${selectedVideo && selectedVideo.id === video.id ? 'selected' : ''}`} onClick={() => handleVideoClick(video)}>
+                         p-2 py-3 ${selectVideo && selectVideo.id === video.id ? 'selected' : ''}`} onClick={() => handleVideoClick(video)}>
                         {/* <!-- Thumbnail --> */}
                         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"

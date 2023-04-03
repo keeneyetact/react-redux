@@ -5,6 +5,15 @@ const assignemtMarkApi = apiSlice.injectEndpoints({
         fetchAssignments: builder.query({
             query: () => '/assignmentMark'
         }),
+        findAssignment: builder.query({
+            query: ({stdId, assignmentId}) => `/assignmentMark?student_id=${stdId}&assignment_id=${assignmentId}`,
+            transformResponse: (response) => {
+                if (Array.isArray(response) && response.length === 1) {
+                  return response[0]
+                }
+                return response
+              },
+        }),
         markAssignment: builder.mutation({
             query: ({id, data}) => ({
                 url: `/assignmentMark/${id}`,
@@ -25,11 +34,34 @@ const assignemtMarkApi = apiSlice.injectEndpoints({
                     console.log(error)
                 }
             }
+        }),
+        submitAssignment: builder.mutation({
+            query: ({data})=> ({
+                url: '/assignmentMark',
+                method: 'POST',
+                body: data
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data: submitedAssignment } = await queryFulfilled;
+                    if(submitedAssignment?.id) {
+                        // Updating find assignment cache pessimistcally
+                        dispatch(apiSlice.util.updateQueryData("findAssignment", 
+                        {stdId: submitedAssignment.student_id, assignmentId: submitedAssignment.assignment_id}, 
+                        (draft) => submitedAssignment))
+                       // cache update end
+                   }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
         })
     })
 })
 
 export const {
     useFetchAssignmentsQuery,
-    useMarkAssignmentMutation
+    useFindAssignmentQuery,
+    useMarkAssignmentMutation,
+    useSubmitAssignmentMutation
 } = assignemtMarkApi
