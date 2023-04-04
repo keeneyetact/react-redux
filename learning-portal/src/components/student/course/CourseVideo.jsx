@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useGetQuizzesQuery } from '../../../features/quizzes/quizzesApi';
 import { useGetAssignmentsQuery } from '../../../features/assignments/assignmentsApi';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import AssignmentModal from './AssignmentModal';
-import { useFetchAssignmentsQuery, useFindAssignmentQuery } from '../../../features/assignmentMark/assignmentMarkApi';
+import { useFindAssignmentQuery } from '../../../features/assignmentMark/assignmentMarkApi';
 
 const CourseVideo = () => {
+    const navigate = useNavigate()
     const { user } = useSelector(state => state.auth)
     const { data: quizList } = useGetQuizzesQuery()
     const { data: assignmentList } = useGetAssignmentsQuery()
@@ -21,7 +21,6 @@ const CourseVideo = () => {
 
     const [quiz, setQuiz] = useState()
     const [assignment, setAssignment] = useState()
-    const [assignmentSubmited, setAssignmentSubmited] = useState()
 
     const {video} = useSelector(state => state.video)
     const { id, title, description, url, createdAt } = video || {};
@@ -36,6 +35,11 @@ const CourseVideo = () => {
 
     const {data} = useFindAssignmentQuery({stdId: user?.id, assignmentId: assignment?.id})
 
+
+    const handleQuiz = (e) => {
+        e.preventDefault()
+        navigate(`/quiz/${id}`)
+    }
 
   return (
     <div className="col-span-full w-full space-y-8 lg:col-span-2">
@@ -54,13 +58,14 @@ const CourseVideo = () => {
 
                         <div className="flex gap-4">
                             <button onClick={controlModal} disabled={data?.id || !assignment}
-                                className={`px-3 font-bold py-1 border ${data?.id ? 'bg-violet-600 border-violet' : (! assignment ? 'bg-red-200' : 'cursor-pointer text-cyan border-cyan text-sm hover:bg-cyan hover:text-primary')} rounded-full`}>
+                                className={`px-3 font-bold py-1 border ${data?.id ? 'bg-violet-600 border-violet' : (! assignment ? 'bg-red-200' : 'cursor-pointer text-cyan border-cyan hover:bg-cyan hover:text-primary')} rounded-full text-sm`}>
                             {data?.id ?  'এসাইনমেন্ট জমা দিয়েছেন' : (!assignment ? 'এসাইনমেন্ট নেই' : 'এসাইনমেন্ট জমা দিন')}
                             </button>
 
-                            <a href="./Quiz.html"
-                                className="px-3 font-bold py-1 border border-cyan text-cyan rounded-full text-sm hover:bg-cyan hover:text-primary">
-                               {quiz ? 'কুইজে অংশগ্রহণ করুন' : 'কুইজ নেই'}</a>
+                            <button onClick={handleQuiz} disabled={!quiz}
+                                className={`px-3 font-bold py-1 border ${quiz ? 'border-cyan text-cyan hover:bg-cyan hover:text-primary' : 'bg-red-200 border-red'} rounded-full text-sm `}>
+                               {quiz ? 'কুইজে অংশগ্রহণ করুন' : 'কুইজ নেই'}
+                            </button>
                         </div>
                         <p className="mt-4 text-sm text-slate-400 leading-6">
                             {description}
