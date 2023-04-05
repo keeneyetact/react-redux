@@ -3,10 +3,16 @@ import { apiSlice } from "../api/apiSlice";
 const quizMarkApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getQuizMark: builder.query({
-            query: () => 'quizMark'
+            query: () => '/quizMark'
         }),
-        getSingleQuiz: builder.query({
-            query: ({stdId, videoId}) => `/quizMark?student_id${stdId}&video_id${videoId}`
+        findQuiz: builder.query({
+            query: ({stdId, videoId}) => `/quizMark?student_id=${stdId}&video_id=${videoId}`,
+            transformResponse: (response) => {
+                if (Array.isArray(response) && response.length === 1) {
+                  return response[0]
+                }
+                return response
+              },
         }) ,
         submitQuiz: builder.mutation({
             query: ({data}) => ({
@@ -20,6 +26,6 @@ const quizMarkApi = apiSlice.injectEndpoints({
 
 export const {
     useGetQuizMarkQuery,
-    useGetSingleQuizQuery,
+    useFindQuizQuery,
     useSubmitQuizMutation
 } = quizMarkApi

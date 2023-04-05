@@ -12,7 +12,7 @@ import Navbar from './components/common/Navbar';
 // Student Pages
 import CoursePlayer from './pages/student/CoursePlayer';
 import Leaderboard from './pages/student/Leaderboard';
-import Quiz from './pages/student/Quiz';
+import QuizPage from './pages/student/QuizPage';
 import StudentRegistration from './pages/student/Registration';
 
 // Admin Pages
@@ -27,7 +27,6 @@ import EditVideo from './pages/admin/EditVideo';
 import EditAssignment from './pages/admin/EditAssignment';
 import AddQuiz from './pages/admin/AddQuiz';
 import EditQuiz from './pages/admin/EditQuiz';
-import QuizPage from './pages/student/QuizPage';
 
 function App () {
   // Upadting redux store from localstorage
