@@ -1,9 +1,9 @@
 import React from 'react'
-import { useFetchAssignmentsQuery } from '../../../features/assignmentMark/assignmentMarkApi'
+import { useGetAssignmentMarkQuery } from '../../../features/assignmentMark/assignmentMarkApi'
 import SingleAssignment from './SingleAssignment'
 
 const AssignmentList = () => {
-    const { data } = useFetchAssignmentsQuery()
+    const { data } = useGetAssignmentMarkQuery()
   return (
     <div className="px-3 py-20 bg-opacity-10">
                 <ul className="assignment-status">

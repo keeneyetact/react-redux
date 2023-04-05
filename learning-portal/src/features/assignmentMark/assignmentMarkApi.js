@@ -2,7 +2,7 @@ import { apiSlice } from "../api/apiSlice";
 
 const assignemtMarkApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        fetchAssignments: builder.query({
+        getAssignmentMark: builder.query({
             query: () => '/assignmentMark'
         }),
         findAssignment: builder.query({
@@ -60,7 +60,7 @@ const assignemtMarkApi = apiSlice.injectEndpoints({
 })
 
 export const {
-    useFetchAssignmentsQuery,
+    useGetAssignmentMarkQuery,
     useFindAssignmentQuery,
     useMarkAssignmentMutation,
     useSubmitAssignmentMutation
