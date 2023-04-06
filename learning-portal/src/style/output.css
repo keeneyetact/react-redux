@@ -1512,6 +1512,12 @@ body {
   color: green !important;
 }
 
+.empty-text {
+  color: red;
+  font-size: 24px;
+  text-align: center;
+}
+
 .selected {
   background-color: rgb(19, 116, 0) !important;
 }

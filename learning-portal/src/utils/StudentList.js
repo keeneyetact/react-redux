@@ -24,7 +24,7 @@ export default function StudentList ({assignmentMarkData, quizMarkData}) {
           student.quizMark += Number(quiz.mark);
           student.totalMark += Number(quiz.mark);
         } else {
-          result.push({
+          result?.push({
             student_id: quiz.student_id,
             student_name: quiz.student_name,
             totalMark: Number(quiz.mark),
