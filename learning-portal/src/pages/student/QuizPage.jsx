@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useGetQuizByVideoQuery } from '../../features/quizzes/quizzesApi'
-import { useSubmitQuizMutation } from '../../features/quizMark/quizMarkApi'
+import { useFindQuizQuery, useSubmitQuizMutation } from '../../features/quizMark/quizMarkApi'
 import Error from '../../components/common/Error'
+import Loading from '../../components/common/Loading'
+import NoContent from '../../components/common/NoContent'
 
 const QuizPage = () => {
     const { videoId } = useParams()
     const navigate = useNavigate()
     const { user } = useSelector(state => state.auth)
     const [currentQuestion, setCurrentQuestion] = useState(0);
+    const { data: quizDone } = useFindQuizQuery({stdId: user?.id, videoId})
     const {data: quizData, isLoading} = useGetQuizByVideoQuery(videoId)
     const [submitQuiz, {isSuccess, isLoading: submitLoading, error}] = useSubmitQuizMutation()
 
@@ -73,51 +76,77 @@ const QuizPage = () => {
       
     
 const currentQuiz = quizData?.length ? quizData[currentQuestion] : [];
+
+      // decide what to render
+      let content = null;
+
+      if(isLoading) {
+        content= <Loading />
+      }
+
+      if(quizDone?.id) {
+        content = <NoContent message={"The Quiz you are trying to participate, that is already given by you...!!"} />
+      }
+
+      if(!isLoading && !quizDone?.id && quizData?.length === 0) {
+        content = <NoContent message={"The Quiz your are trying to participate is currently not available..."} />
+      }
+
+      if(!isLoading && !quizDone?.id && quizData?.length > 0) {
+        content = (
+          <div className="py-6 bg-primary">
+          <div className="mx-auto max-w-7xl px-5 lg:px-0">
+            <div className="mb-8">
+              <h1 className="text-2xl font-bold">Quizzes for {currentQuiz?.video_title}
+              </h1>
+              <p className="text-sm text-slate-200">Each question contains 5 Mark</p>
+            </div>
+            <div className="space-y-8 ">
+                  {!isLoading && <div className="quiz">
+              <h1 className="question">{currentQuiz?.question}</h1>
+              <div className="quizOptions">
+                {currentQuiz?.options?.map((option) => (
+                  <label key={option.id}>
+                    <input
+                      type="checkbox"
+                      value={option.id}
+                      checked={answers[currentQuestion]?.includes(option.id)}
+                      onChange={() => handleOptionChange(option)}
+                    />
+                    {option.option}
+                  </label>
+                ))}
+              </div>
+              <div className="text-center pb-6 mt-6">
+                <button onClick={() => setCurrentQuestion(currentQuestion - 1)} 
+                disabled={currentQuestion === 0}
+                className={`inline-flex items-center py-2 px-4 text-sm font-medium text-gray-500 ${(currentQuestion === 0) ? 'disabled:opacity-30' : 'bg-white cursor-pointer hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'} rounded-full border border-gray-700 `}>
+                  Previous
+                </button>
+                <button onClick={() => setCurrentQuestion(currentQuestion + 1)} 
+                disabled={currentQuestion === quizData?.length - 1}
+                className={`inline-flex items-center py-2 px-4 ml-3 text-sm font-medium text-gray-500 ${(currentQuestion === quizData?.length - 1) ? 'disabled:opacity-30' : 'bg-white cursor-pointer hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'} rounded-full border border-gray-700 `}>
+                  Next
+                </button>
+                {currentQuestion === quizData?.length - 1 && (
+                  <button onClick={handleSubmit} disabled={submitLoading}
+                  className="px-4 py-2 rounded-full bg-cyan block ml-auto mt-8 hover:opacity-90 active:opacity-100 active:scale-95 ">Submit</button>
+                )}
+              </div>
+            </div>  } 
+          {error?.data && <Error message={error?.data} />}
+            </div> 
+            </div> 
+            </div> 
+        )
+      }
+
+
+
   
     return (
         <div> 
-            <section className="py-6 bg-primary">
-    <div className="mx-auto max-w-7xl px-5 lg:px-0">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold">Quizzes for {currentQuiz?.video_title}
-        </h1>
-        <p className="text-sm text-slate-200">Each question contains 5 Mark</p>
-      </div>
-      <div className="space-y-8 ">
-            {!isLoading && <div className="quiz">
-        <h1 className="question">{currentQuiz?.question}</h1>
-        <div className="quizOptions">
-          {currentQuiz?.options?.map((option) => (
-            <label key={option.id}>
-              <input
-                type="checkbox"
-                value={option.id}
-                checked={answers[currentQuestion]?.includes(option.id)}
-                onChange={() => handleOptionChange(option)}
-              />
-              {option.option}
-            </label>
-          ))}
-        </div>
-        <div className="text-center pb-6 mt-6">
-          <button onClick={() => setCurrentQuestion(currentQuestion - 1)} 
-          disabled={currentQuestion === 0}
-          className={`inline-flex items-center py-2 px-4 text-sm font-medium text-gray-500 ${(currentQuestion === 0) ? 'disabled:opacity-30' : 'bg-white cursor-pointer'} rounded-full border border-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}>
-            Previous
-          </button>
-          <button onClick={() => setCurrentQuestion(currentQuestion + 1)} 
-          disabled={currentQuestion === quizData?.length - 1}
-          className={`inline-flex items-center py-2 px-4 ml-3 text-sm font-medium text-gray-500 ${(currentQuestion === quizData?.length - 1) ? 'disabled:opacity-30' : 'bg-white cursor-pointer'} rounded-full border border-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}>
-            Next
-          </button>
-          {currentQuestion === quizData?.length - 1 && (
-            <button onClick={handleSubmit} disabled={submitLoading}
-            className="px-4 py-2 rounded-full bg-cyan block ml-auto mt-8 hover:opacity-90 active:opacity-100 active:scale-95 ">Submit</button>
-          )}
-        </div>
-      </div>  } 
-      {error?.data && <Error message={error?.data} />}
-      </div> </div> </section> 
+            {content}
       </div>
     );
   }
