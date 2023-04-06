@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import AssignmentList from '../../components/admin/assignment/AssignmentList'
+import AssignmentList from '../../../components/admin/assignment/AssignmentList'
 
 const Assignment = () => {
     const navigate = useNavigate()

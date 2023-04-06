@@ -2,9 +2,9 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import LearningPortal from '../../assets/image/learningportal.svg'
-import Error from '../../components/common/Error'
-import { useAddVideoMutation } from '../../features/videos/videosApi'
+import LearningPortal from '../../../assets/image/learningportal.svg'
+import Error from '../../../components/common/Error'
+import { useAddVideoMutation } from '../../../features/videos/videosApi'
 
 const AddVideo = () => {
     const navigate = useNavigate()

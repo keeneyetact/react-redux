@@ -1,16 +1,16 @@
 import React from 'react'
-import QuizList from '../../components/admin/quiz/QuizList'
+import AssignmentList from '../../../components/admin/assignmentMark/AssignmentList'
 
-const Quizzes = () => {
+const AssignmentMark = () => {
   return (
     <div>
         <div className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">
-            <QuizList />
+            <AssignmentList />
         </div>
     </div>
     </div>
   )
 }
 
-export default Quizzes
+export default AssignmentMark

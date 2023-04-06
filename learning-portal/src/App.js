@@ -17,16 +17,16 @@ import StudentRegistration from './pages/student/Registration';
 
 // Admin Pages
 import Dashboard from './pages/admin/Dashboard';
-import Assignment from './pages/admin/Assignment';
-import AddAssignment from './pages/admin/AddAssignment';
-import AssignmentMark from './pages/admin/AssignmentMark';
-import Quizzes from './pages/admin/Quizzes';
-import Videos from './pages/admin/Videos';
-import AddVideo from './pages/admin/AddVideo';
-import EditVideo from './pages/admin/EditVideo';
-import EditAssignment from './pages/admin/EditAssignment';
-import AddQuiz from './pages/admin/AddQuiz';
-import EditQuiz from './pages/admin/EditQuiz';
+import Assignment from './pages/admin/assignment/Assignment';
+import AddAssignment from './pages/admin/assignment/AddAssignment';
+import AssignmentMark from './pages/admin/assignment/AssignmentMark';
+import Quizzes from './pages/admin/quiz/Quizzes';
+import Videos from './pages/admin/video/Videos';
+import AddVideo from './pages/admin/video/AddVideo';
+import EditVideo from './pages/admin/video/EditVideo';
+import EditAssignment from './pages/admin/assignment/EditAssignment';
+import AddQuiz from './pages/admin/quiz/AddQuiz';
+import EditQuiz from './pages/admin/quiz/EditQuiz';
 
 function App () {
   // Upadting redux store from localstorage

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import VideoList from '../../components/admin/Video/VideoList'
+import VideoList from '../../../components/admin/Video/VideoList'
 
 const Videos = () => {
     const navigate = useNavigate()

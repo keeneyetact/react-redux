@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import LearningPortal from '../../assets/image/learningportal.svg'
-import Error from '../../components/common/Error'
-import { useAddAssignmentMutation } from '../../features/assignments/assignmentsApi'
-import { useGetVideosQuery } from '../../features/videos/videosApi'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import LearningPortal from '../../../assets/image/learningportal.svg'
+import Error from '../../../components/common/Error'
+import { useEditAssignmentsMutation, useGetAssignmentQuery } from '../../../features/assignments/assignmentsApi'
+import { useGetVideosQuery } from '../../../features/videos/videosApi'
 
-const AddAssignment = () => {
+
+const EditAssignment = () => {
     const navigate = useNavigate()
+    const { id } = useParams()
     const [title, setTitle] = useState('')
     const [totalMark, setTotalMark] = useState()
     const [videoTitle, setVideoTitle] = useState()
@@ -15,12 +16,14 @@ const AddAssignment = () => {
     const [error, setError] = useState('')
 
     const {data: videoList } = useGetVideosQuery()
-    const [addAssignment, { isLoading, isSuccess, error: addError }] = useAddAssignmentMutation()
+    const {data: currentAssignment, error: currentError} = useGetAssignmentQuery(id)
+    const [editAssignment, { isLoading, isSuccess, error: editError }] = useEditAssignmentsMutation()
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        addAssignment({
+        editAssignment({
+            id,
             data: {
                 title,
                 totalMark,
@@ -31,9 +34,16 @@ const AddAssignment = () => {
     }
 
     useEffect(()=> {
-        if(addError?.data) setError("Something went wrong. Please, give a refresh and try again!!!")
+        setTitle(currentAssignment?.title)
+        setTotalMark(currentAssignment?.totalMark)
+        setVideoId(currentAssignment?.video_id)
+        setVideoTitle(currentAssignment?.video_title)
+    },[currentAssignment])
+
+    useEffect(()=> {
+        if(editError?.data || currentError?.data) setError("Something went wrong. Please, give a refresh and try again!!!")
         // console.log(addError)
-    },[addError])
+    },[currentError, editError])
 
     useEffect(()=> {
           if(isSuccess) navigate('/admin/assignment')
@@ -45,7 +55,7 @@ const AddAssignment = () => {
             <div>
                 <img className="h-12 mx-auto" src={LearningPortal} alt="" />            
                 <h1 className="mt-6 text-center text-3xl font-extrabold text-slate-100">
-                    Add New Assignment
+                    Edit Assignment
                 </h1>
             </div>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit} >
@@ -77,7 +87,7 @@ const AddAssignment = () => {
                 <div>
                     <button type="submit" disabled={isLoading}
                         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">
-                        Add Assignment
+                        Update Assignment
                     </button>
                 </div>
 
@@ -88,4 +98,4 @@ const AddAssignment = () => {
   )
 }
 
-export default AddAssignment
+export default EditAssignment
