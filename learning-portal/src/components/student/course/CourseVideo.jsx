@@ -25,18 +25,16 @@ const CourseVideo = () => {
 
     const {video} = useSelector(state => state.video)
     const { id, title, description, url, createdAt } = video || {};
-    console.log(id)
 
     useEffect(()=> {
         setQuiz(quizList?.find(q=> q.video_id === id))
         setAssignment(assignmentList?.find(a=> a.video_id === id))
-    },[id])
+    },[id, quizList, assignmentList])
 
 
     // checking if user already submitted quiz or assingment
     const { data: assignmentData} = useFindAssignmentQuery({stdId: user?.id, assignmentId: assignment?.id})
     const { data: quizData} = useFindQuizQuery({stdId: user?.id, videoId: id})
-
 
 
     const handleQuiz = (e) => {
@@ -48,9 +46,9 @@ const CourseVideo = () => {
     <div className="col-span-full w-full space-y-8 lg:col-span-2">
                     <iframe width="100%" className="aspect-video" src={url}
                         title={title}
-                        frameborder="0"
+                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
+                        allowFullScreen></iframe>
 
                     <div>
                         <h1 className="text-lg font-semibold tracking-tight text-slate-100">
@@ -77,7 +75,7 @@ const CourseVideo = () => {
 
                     </div>
                     <AssignmentModal open={opened} control={controlModal} assignment={assignment} />
-                </div>
+    </div>
   )
 }
 

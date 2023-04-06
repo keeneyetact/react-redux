@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
-import { useGetVideosQuery } from '../../../features/videos/videosApi'
 import { selectedVideo } from '../../../features/videos/videoSlice';
 
-const CourseVideoList = () => {
+const CourseVideoList = ({ videoList }) => {
     const dispatch = useDispatch()
-    const { data: videoList } = useGetVideosQuery()
     const [selectVideo, setSelectVideo] = useState()
 
     useEffect(()=>{
@@ -20,10 +18,11 @@ const CourseVideoList = () => {
         dispatch(selectedVideo(video))
       }
 
+
   return (
     <div className="col-span-full lg:col-auto max-h-[570px] overflow-y-auto bg-secondary p-4 rounded-md border border-slate-50/10 divide-y divide-slate-600/30">
-
-                {videoList && videoList.map((video) => (
+            {
+                videoList && videoList.map((video) => (
                     <div key={video?.id} className={`w-full flex flex-row gap-2 cursor-pointer hover:bg-slate-900 
                          p-2 py-3 ${selectVideo && selectVideo.id === video.id ? 'selected' : ''}`} onClick={() => handleVideoClick(video)}>
                         {/* <!-- Thumbnail --> */}
@@ -45,7 +44,8 @@ const CourseVideoList = () => {
                             </div>
                         </div>
                     </div>
-                ))}
+                ))
+            }
     </div>
   )
 }

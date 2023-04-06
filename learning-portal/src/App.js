@@ -10,9 +10,9 @@ import Login from './pages/Login';
 import Navbar from './components/common/Navbar';
 
 // Student Pages
-import CoursePlayer from './pages/student/CoursePlayer';
-import Leaderboard from './pages/student/Leaderboard';
+import Courses from './pages/student/Courses';
 import QuizPage from './pages/student/QuizPage';
+import Leaderboard from './pages/student/Leaderboard';
 import StudentRegistration from './pages/student/Registration';
 
 // Admin Pages
@@ -51,7 +51,7 @@ function App () {
         {/* Student Routes */}
         <Route path="/" element={ <PublicRoute> <Login /> </PublicRoute> } />
         <Route path="/registration" element={ <PublicRoute> <StudentRegistration /> </PublicRoute> } />
-        <Route path='/courses' element={ <StudentRoute> <CoursePlayer /> </StudentRoute> } />
+        <Route path='/courses' element={ <StudentRoute> <Courses /> </StudentRoute> } />
         <Route path='/leaderboard' element={ <StudentRoute> <Leaderboard /> </StudentRoute> } />
         <Route path='/quiz/:videoId' element={ <StudentRoute> <QuizPage /> </StudentRoute> } />
 
