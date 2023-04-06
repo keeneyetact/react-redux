@@ -28,7 +28,7 @@ const CourseVideo = () => {
 
     useEffect(()=> {
         setQuiz(quizList?.find(q=> q.video_id === id))
-        setAssignment(assignmentList?.find(a=> a.video_id === id))
+        setAssignment(assignmentList?.find(a=> a.video_id == id))
     },[id, quizList, assignmentList])
 
 
@@ -71,10 +71,10 @@ const CourseVideo = () => {
                         <p className="mt-4 text-sm text-slate-400 leading-6">
                             {description}
                         </p>
-
-
                     </div>
-                    <AssignmentModal open={opened} control={controlModal} assignment={assignment} />
+
+                    <AssignmentModal open={opened} control={controlModal} assignment={assignment} isValid={assignmentData} />
+
     </div>
   )
 }

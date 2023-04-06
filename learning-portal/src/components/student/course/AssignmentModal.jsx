@@ -5,13 +5,16 @@ import { useSelector } from 'react-redux'
 import { useSubmitAssignmentMutation } from '../../../features/assignmentMark/assignmentMarkApi'
 import Error from '../../common/Error'
 
-const AssignmentModal = ({ open, control, assignment }) => {
+const AssignmentModal = ({ open, control, assignment, isValid }) => {
     const { user } = useSelector(state => state.auth)
-    const [ submitAssignment, {error, isSuccess, isLoading}] = useSubmitAssignmentMutation()
+    const [ submitAssignment, {error: submitError, isSuccess, isLoading}] = useSubmitAssignmentMutation()
+    
     const [repo_link, setRepo_link] = useState()
+    const [ error, setError ] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setError('')
         const data = {
             student_id: user?.id,
             student_name: user?.name,
@@ -24,21 +27,35 @@ const AssignmentModal = ({ open, control, assignment }) => {
             repo_link
         }
         submitAssignment({data})
-        console.log(data)
     }
     useEffect(()=> {
         if(isSuccess){
             control()
         }
     },[isSuccess])
+
+    useEffect(()=> {
+        if(isValid?.id ) {
+            setError("You can not submit one assignment twice...")
+        } else if(submitError) {
+            setError(submitError?.data)
+        }
+    },[isValid, submitError])
+
+    const handleClose = (e) => {
+        e.preventDefault()
+        setError('')
+        control()
+    }
+
   return (
     open && (
         <>
             <div
-                onClick={control}
+                onClick={handleClose}
                 className="fixed w-full h-full inset-0 z-10 bg-black/50 cursor-pointer backdrop-filter backdrop-blur-sm z-20"
             ></div>
-            <div className="rounded w-[400px] lg:w-[600px] space-y-8 bg-secondary rounded-md border border-slate-50/10 p-10 absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+            <div className="w-400 lg:w-600 space-y-8 bg-secondary rounded-md border border-slate-50/10 p-10 absolute top-1/4 left-1/3 z-20 -translate-x-1/2 -translate-y-1/2">
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
                     Submit Your Assignment Now
                 </h2>
@@ -66,14 +83,14 @@ const AssignmentModal = ({ open, control, assignment }) => {
                     <div>
                         <button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={isLoading || isValid?.id}
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
                         >
                             Submit Assignment
                         </button>
                     </div>
 
-                    {error?.data && <Error message={error?.data} />}
+                    {error !== '' && <Error message={error} />}
                 </form>
             </div>
         </>
