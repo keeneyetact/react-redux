@@ -36,56 +36,6 @@ const QuizForm = ({ quizData }) => {
       setQuestion(e.target.value);
     };
 
-//   const handleOptionChange = (optionId) => {
-//     const newOptions = options.map((option) => {
-//       if (option.id === optionId) {
-//         return { ...option, isCorrect: true };
-//       } else {
-//         return { ...option, isCorrect: false };
-//       }
-//     });
-//     setOptions(newOptions);
-//   };
-//   const handleOptionTextChange = (optionId, text) => {
-//     const newOptions = options.map((option) => {
-//       if (option.id === optionId) {
-//         return { ...option, option: text };
-//       } else {
-//         return option;
-//       }
-//     });
-//     setOptions(newOptions);
-//   };
-
-//   const handleCheckboxChange = (optionId) => {
-//     setQuestion((prevState) => {
-//       const updatedOptions = prevState?.options?.map((option) => {
-//         if (option.id === optionId) {
-//           return { ...option, isCorrect: !option.isCorrect };
-//         }
-//         return option;
-//       });
-//       return { ...prevState, options: updatedOptions };
-//     });
-//   };
-
-//   const handleAddOption = () => {
-//     const newOption = { id: options.length + 1, option: "", isCorrect: false };
-//     setOptions([...options, newOption]);
-//   };
-
-//   const handleRemoveOption = (optionId) => {
-//     const newOptions = options.filter((option) => option.id !== optionId);
-//     setOptions(newOptions);
-//   };
-
-
-// const handleOptionChange = (e, index) => {
-//   const newOptions = [...options];
-//   newOptions[index].option = e.target.value;
-//   setOptions(newOptions);
-// };
-
 const handleOptionChange = (e, optionId) => {
     const updatedOptions = options.map((option) => {
       if (option.id === optionId) {
@@ -96,12 +46,6 @@ const handleOptionChange = (e, optionId) => {
     });
     setOptions(updatedOptions);
   };
-
-// const handleCheckboxChange = (e, index) => {
-//   const newOptions = [...options];
-//   newOptions[index].isCorrect = e.target.checked;
-//   setOptions(newOptions);
-// };
 
 const handleCheckboxChange = (e) => {
     const updatedOptions = options.map((option) => {
@@ -114,16 +58,6 @@ const handleCheckboxChange = (e) => {
     setOptions(updatedOptions);
   };
 
-const handleAddOption = () => {
-  setOptions([...options, { option: "", isCorrect: false }]);
-};
-
-const handleRemoveOption = (index) => {
-  const newOptions = [...options];
-  newOptions.splice(index, 1);
-  setOptions(newOptions);
-};
-
 const handleSubmit = (e) => {
   e.preventDefault();
   const data = {
@@ -132,8 +66,8 @@ const handleSubmit = (e) => {
     video_id: Number(videoId),
     video_title: videoTitle
   };
-  console.log(data, videoId);
-  // Send POST request to server with data
+  
+  // decide where to hit in the server
   if (quizData) {
     editQuiz({id: quizData?.id, data})
   } else {
@@ -178,10 +112,8 @@ useEffect(()=> {
             onChange={(e) => handleOptionChange(e, option.id)}
             required
           />
-          {/* <button type="button" onClick={() => handleRemoveOption(option?.id)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded ml-2">Remove</button> */}
         </div>
       ))}
-        {/* <button type="button" onClick={handleAddOption} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded">Add Option</button> */}
 
         <div className='mt-4'>
             <label htmlFor="video" className="font-semibold text-lg mb-2 block">Assign Quiz to Video</label>
