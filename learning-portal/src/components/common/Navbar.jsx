@@ -25,10 +25,13 @@ const Navbar = () => {
         <div className="max-w-7xl px-5 lg:px-0 mx-auto flex justify-between py-3">
             <img className="h-10" src={LearningPortal} alt="" />
             <div className="flex items-center gap-3">
-                {isAdmin ? <h2 className="font-bold">{user?.name}</h2> :
+                {isAdmin ? <>
+                    <Link to="/admin/dashboard" className="font-bold" >Dashboard</Link>
+                    <h2 className="font-bold">{user?.name}</h2>
+                </> :
                 <>
-                <Link to="/course-player" >Course</Link>
-                <Link to="/leaderboard" >Leaderboard</Link>
+                <Link to="/courses" className="font-bold" >Course</Link>
+                <Link to="/leaderboard" className="font-bold" >Leaderboard</Link>
                 <h2 className="font-bold">{user?.name}</h2>
                 </>}
                 {isAdmin ? <button onClick={logout}
