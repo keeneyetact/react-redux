@@ -19,7 +19,7 @@ const Dashboard = () => {
                         <p className="text-slate-200 mt-3 ">Videos</p>
                     </Link>
 
-                    <Link to='/admin/assignment' className="dashboard-item-card">
+                    <Link to='/admin/assignments' className="dashboard-item-card">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" className="w-8 h-8 text-red-500">
                             <path stroke-linecap="round" stroke-linejoin="round"

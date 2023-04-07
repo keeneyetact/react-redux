@@ -1,12 +1,32 @@
 import React from 'react'
-import { useGetAssignmentsQuery } from '../../../features/assignments/assignmentsApi'
 import SingleAssignment from './SingleAssignment'
+import Error from '../../../components/common/Error'
+import Loading from '../../../components/common/Loading'
+import NoContent from '../../../components/common/NoContent'
+
+import { useGetAssignmentsQuery } from '../../../features/assignments/assignmentsApi'
 
 const AssignmentList = () => {
     const { data, isLoading, isError } = useGetAssignmentsQuery()
-  return (
-    <div className="overflow-x-auto mt-4">
-                <table className="divide-y-1 text-base divide-gray-600 w-full">
+
+    // decide what to render
+    let content = null;
+
+    if(isLoading) {
+      content= <Loading />
+    }
+
+    if(!isLoading && !isError) {
+      content = <Error message={"Something Went Wrong... Please, Refresh The Page!!!"} />
+    }
+
+    if(!isLoading && !isError && data?.length === 0) {
+      content = <NoContent message={"No Assignment Found... To Add Assignment Click Add Assignment Button...!!!"} />
+    }
+
+    if(!isLoading && !isError && data?.length > 0) {
+      content = (
+        <table className="divide-y-1 text-base divide-gray-600 w-full">
                     <thead>
                         <tr>
                             <th className="table-th">Title</th>
@@ -22,7 +42,13 @@ const AssignmentList = () => {
 
                     </tbody>
                 </table>
-            </div>
+      )
+    }
+
+  return (
+    <div className="overflow-x-auto mt-4">
+        {content}            
+    </div>
   )
 }
 

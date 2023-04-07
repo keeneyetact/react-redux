@@ -17,7 +17,7 @@ import StudentRegistration from './pages/student/Registration';
 
 // Admin Pages
 import Dashboard from './pages/admin/Dashboard';
-import Assignment from './pages/admin/assignment/Assignment';
+import Assignments from './pages/admin/assignment/Assignments';
 import AddAssignment from './pages/admin/assignment/AddAssignment';
 import AssignmentMark from './pages/admin/assignment/AssignmentMark';
 import Quizzes from './pages/admin/quiz/Quizzes';
@@ -58,7 +58,7 @@ function App () {
         {/* Admin Routes */}
         <Route path='/admin' element={ <PublicRoute> <Login /> </PublicRoute> } />
         <Route path='/admin/dashboard' element={ <AdminRoute> <Dashboard /> </AdminRoute> } />
-        <Route path='/admin/assignment' element={ <AdminRoute> <Assignment /> </AdminRoute> } />
+        <Route path='/admin/assignments' element={ <AdminRoute> <Assignments /> </AdminRoute> } />
         <Route path='/admin/assignment/add' element={ <AdminRoute> <AddAssignment /> </AdminRoute> } />
         <Route path='/admin/assignment/edit/:id' element={ <AdminRoute> <EditAssignment /> </AdminRoute> } />
         <Route path='/admin/assignment-mark' element={ <AdminRoute> <AssignmentMark /> </AdminRoute> } />
