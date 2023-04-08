@@ -32,11 +32,17 @@ const CourseVideo = () => {
   }, [id, quizList, assignmentList]);
 
   // checking if user already submitted quiz or assingment
-  const { data: assignmentData } = useFindAssignmentQuery({
-    stdId: user?.id,
-    assignmentId: assignment?.id,
-  });
-  const { data: quizData } = useFindQuizQuery({ stdId: user?.id, videoId: id });
+  const { data: assignmentData } = useFindAssignmentQuery(
+    {
+      stdId: user?.id,
+      assignmentId: assignment?.id,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
+  const { data: quizData } = useFindQuizQuery(
+    { stdId: user?.id, videoId: id },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const handleQuiz = (e) => {
     e.preventDefault();

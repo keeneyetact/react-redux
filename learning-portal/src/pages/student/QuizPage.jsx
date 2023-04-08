@@ -15,7 +15,7 @@ const QuizPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const { data: quizDone } = useFindQuizQuery({ stdId: user?.id, videoId });
+  const { data: quizDone } = useFindQuizQuery({ stdId: user?.id, videoId }, { refetchOnMountOrArgChange: true });
   const { data: quizData, isLoading } = useGetQuizByVideoQuery(videoId);
   const [submitQuiz, { isSuccess, isLoading: submitLoading, error }] =
     useSubmitQuizMutation();
