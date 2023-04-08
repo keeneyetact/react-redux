@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import LearningPortal from "../../../assets/image/learningportal.svg";
+import { useNavigate } from "react-router-dom";
 import Error from "../../common/Error";
 import {
   useAddAssignmentMutation,
