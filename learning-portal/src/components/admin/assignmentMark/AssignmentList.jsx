@@ -3,10 +3,11 @@ import { useGetAssignmentMarkQuery } from '../../../features/assignmentMark/assi
 import SingleAssignment from './SingleAssignment'
 
 const AssignmentList = () => {
-    const { data } = useGetAssignmentMarkQuery()
+    const { data, refetch } = useGetAssignmentMarkQuery()
   return (
     <div className="px-3 py-20 bg-opacity-10">
                 <ul className="assignment-status">
+                    <li><button onClick={() => refetch()}>Refetch List</button></li>
                     <li>Total <span>{data?.length}</span></li>
                     <li>Pending <span>{data?.filter(d => d.status === 'pending')?.length}</span></li>
                     <li>Mark Sent <span>{data?.filter(d => d.status === 'published')?.length}</span></li>

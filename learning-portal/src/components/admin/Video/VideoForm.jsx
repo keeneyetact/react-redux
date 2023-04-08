@@ -91,13 +91,13 @@ return (
                     <label htmlFor="views" className="sr-only">Views here..</label>
                     <input id="views" name="views" type="text" required
                            value={views} onChange={(e)=> setViews(e.target.value)}
-                           className="video-form-input rounded-t-md" placeholder="Enter Video Views Here.." />
+                           className="video-form-input rounded-t-md" placeholder="Enter Views Like 0K" />
                 </div>
                 <div className="relative">
                     <label htmlFor="duration" className="sr-only">Duration here..</label>
                     <input id="duration" name="duration" type="text" required
                            value={duration} onChange={(e)=> setDuration(e.target.value)}
-                           className="video-form-input rounded-t-md" placeholder="Enter Video Duration Here.." />
+                           className="video-form-input rounded-t-md" placeholder="Enter Duration (mm:ss) 00:00" />
                 </div>
                 </div>
 

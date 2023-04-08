@@ -33,14 +33,16 @@ const AssignmentModal = ({ open, control, assignment, isValid }) => {
             control()
         }
     },[isSuccess])
-
+    
     useEffect(()=> {
-        if(isValid?.id ) {
+        if(isValid?.id) {
             setError("You can not submit one assignment twice...")
         } else if(submitError) {
             setError(submitError?.data)
+        } else {
+            setError('')
         }
-    },[isValid, submitError])
+    },[isValid?.id, submitError])
 
     const handleClose = (e) => {
         e.preventDefault()

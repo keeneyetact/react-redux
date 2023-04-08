@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 
-const assignemtMarkApi = apiSlice.injectEndpoints({
+export const assignmentMarkApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAssignmentMark: builder.query({
             query: () => '/assignmentMark'
@@ -25,7 +25,7 @@ const assignemtMarkApi = apiSlice.injectEndpoints({
                     const { data: markedAssignment } = await queryFulfilled;
                     if(markedAssignment?.id) {
                         // Updating assignment cache pessimistcally
-                        dispatch(apiSlice.util.updateQueryData("fetchAssignments", undefined, (draft) => {
+                        dispatch(apiSlice.util.updateQueryData("getAssignmentMark", undefined, (draft) => {
                             return draft.map(d => d.id == arg.id ? markedAssignment : d )
                        }))
                        // cache update end
@@ -55,7 +55,7 @@ const assignemtMarkApi = apiSlice.injectEndpoints({
                     console.log(error)
                 }
             }
-        })
+        }),
     })
 })
 
@@ -63,5 +63,5 @@ export const {
     useGetAssignmentMarkQuery,
     useFindAssignmentQuery,
     useMarkAssignmentMutation,
-    useSubmitAssignmentMutation
-} = assignemtMarkApi
+    useSubmitAssignmentMutation,
+} = assignmentMarkApi

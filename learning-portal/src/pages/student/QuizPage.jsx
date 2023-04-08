@@ -35,7 +35,7 @@ const QuizPage = () => {
         }
       
         setAnswers(updatedAnswers);
-        console.log(answers)
+        // console.log(answers)
       };
       
     

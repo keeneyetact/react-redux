@@ -92,7 +92,7 @@ export const assignmentsApi = apiSlice.injectEndpoints({
                     console.log(error.message)
                 }
             }
-        })
+        }),
     })
 })
 
@@ -101,5 +101,5 @@ export const {
     useGetAssignmentsQuery,
     useAddAssignmentMutation,
     useEditAssignmentsMutation,
-    useDeleteAssignmentMutation,
+    useDeleteAssignmentMutation
 } = assignmentsApi;

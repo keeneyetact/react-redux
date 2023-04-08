@@ -10,8 +10,8 @@ import Error from '../../components/common/Error'
 import NoContent from '../../components/common/NoContent'
 
 const Leaderboard = () => {
-  const {data: assignmentMarkData, isLoading: assignmentLoading, error: assignmentError} = useGetAssignmentMarkQuery()
-  const {data: quizMarkData, isLoading: quizLoading, error: quizError } = useGetQuizMarkQuery()
+  const {data: assignmentMarkData, isLoading: assignmentLoading, error: assignmentError} = useGetAssignmentMarkQuery({ count: 5 },{ refetchOnMountOrArgChange: true })
+  const {data: quizMarkData, isLoading: quizLoading, error: quizError } = useGetQuizMarkQuery({ count: 5 },{ refetchOnMountOrArgChange: true })
 
   let rank = [] ;
 

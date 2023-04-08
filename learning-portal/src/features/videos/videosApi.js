@@ -86,10 +86,11 @@ export const videosApi = apiSlice.injectEndpoints({
                 // optimistic video cache update end here
                 try {
                     await queryFulfilled
+
                 } catch (error) {
                     // handle error and undo the optimistic update
                     deleteResult.undo();
-                    console.log(error.message)
+                    console.log(error)
                 }
             }
         })

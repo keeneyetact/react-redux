@@ -1233,12 +1233,12 @@ body {
 
 .assignment-status li:nth-of-type(2) {
   --tw-border-opacity: 1;
-  border-color: rgb(22 163 74 / var(--tw-border-opacity));
+  border-color: rgb(128 0 128 / var(--tw-border-opacity));
 }
 
 .assignment-status li:nth-of-type(2) span {
   --tw-bg-opacity: 1;
-  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+  background-color: rgb(128 0 128 / var(--tw-bg-opacity));
 }
 
 .assignment-status li:nth-of-type(3) {
@@ -1249,6 +1249,15 @@ body {
 .assignment-status li:nth-of-type(3) span {
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+}
+.assignment-status li:nth-of-type(4) {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 163 74 / var(--tw-border-opacity));
+}
+
+.assignment-status li:nth-of-type(4) span {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
 
 .quiz {
